@@ -1,3 +1,4 @@
+//ノードリスト用
 package routing;
 
 import core.Connection;
