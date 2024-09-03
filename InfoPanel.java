@@ -63,8 +63,10 @@ public class InfoPanel extends JPanel implements ActionListener{
 		FuruyamaRouter router =(FuruyamaRouter)host.getRouter();
 		LinkedList<Integer> nodeQueue = router.getNodeQueue();
 		
-		String text1 =(host.isMovementActive() ? "" : "INACTIVE ") + " encounted "+
+		String text1 =(host.isMovementActive() ? "" : "INACTIVE ") + " ノードリスト "+
 			nodeQueue;
+		
+		String text2 =(host.isMovementActive() ? "" : "INACTIVE ") + " バッファ中身 "+ messages;
 		
 		
 		/*---------------------------------ここまでが追加部分です------------------------------------*/
@@ -74,13 +76,14 @@ public class InfoPanel extends JPanel implements ActionListener{
 		msgChooser.setSelectedIndex(0);
 		msgChooser.addActionListener(this);
 		
-		routingInfoButton = new JButton("routing info");
+		routingInfoButton = new JButton("ルーティング情報");
 		routingInfoButton.addActionListener(this);
 		
 		this.add(new JLabel(text));
 		/*---------------------------------ここからが追加部分です--------------------------------------*/
 		
 		this.add(new JLabel(text1));
+		this.add(new JLabel(text2));
 		
 		/*---------------------------------ここまでが追加部分です------------------------------------*/
 		this.add(msgChooser);
