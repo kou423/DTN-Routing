@@ -1,4 +1,3 @@
-//ノードリスト用
 package routing;
 
 import core.Connection;
@@ -97,19 +96,23 @@ public class FuruyamaRouter extends ActiveRouter {
     public void changedConnection(Connection con) {
         super.changedConnection(con);
 
-        // 新しく接続されたノードのIDを取得
         if (con.isUp()) {
+            // 現在のノードのIDを取得
             DTNHost otherHost = con.getOtherNode(getHost());
             int otherAddress = otherHost.getAddress();
-
-            // ノードIDをキューに追加
+            
+            // 自ノードのノードリストに相手ノードのIDを追加
             if (!nodeQueue.contains(otherAddress)) {
                 if (nodeQueue.size() >= MAX_QUEUE_SIZE) {
                     nodeQueue.removeFirst(); // キューの先頭を削除
                 }
                 nodeQueue.addLast(otherAddress); // 新しいノードIDを追加
-                System.out.println("Added address: " + otherAddress + " to nodeQueue: " + nodeQueue);
+                System.out.println("追加されたノード: " + otherAddress + " キュー: " + nodeQueue);
             }
+
+            // すれ違った相手のノードリストを表示する
+            FuruyamaRouter otherRouter = (FuruyamaRouter) otherHost.getRouter();
+            System.out.println("相手ノードのノードリスト: " + otherRouter.getNodeQueue());
         }
     }   
 }
