@@ -4,10 +4,11 @@ import core.Connection;
 import core.DTNHost;
 import core.Message;
 import core.Settings;
-import routing.util.RoutingInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -88,31 +89,46 @@ public class FuruyamaRouter extends ActiveRouter {
         this.tryAllMessagesToAllConnections();
     }
 
+    
     @Override
     public FuruyamaRouter replicate() {
         return new FuruyamaRouter(this);
-    }
-
+    }  
     public void changedConnection(Connection con) {
         super.changedConnection(con);
-
+        
+        // 新しく接続されたノードのIDを取得
         if (con.isUp()) {
-            // 現在のノードのIDを取得
             DTNHost otherHost = con.getOtherNode(getHost());
             int otherAddress = otherHost.getAddress();
             
-            // 自ノードのノードリストに相手ノードのIDを追加
+            
+            // ノードIDをキューに追加
             if (!nodeQueue.contains(otherAddress)) {
                 if (nodeQueue.size() >= MAX_QUEUE_SIZE) {
                     nodeQueue.removeFirst(); // キューの先頭を削除
                 }
                 nodeQueue.addLast(otherAddress); // 新しいノードIDを追加
-                System.out.println("追加されたノード: " + otherAddress + " キュー: " + nodeQueue);
+                System.out.println("着目ノード:"+ getHost());
+                System.out.println( "追加されたノード:" + otherAddress +", 追加後の"+ getHost()+"のキュー: " + nodeQueue);
             }
-
-            // すれ違った相手のノードリストを表示する
             FuruyamaRouter otherRouter = (FuruyamaRouter) otherHost.getRouter();
-            System.out.println("相手ノードのノードリスト: " + otherRouter.getNodeQueue());
+            System.out.println("相手ノード(ノードID:" + otherAddress +")のノードリスト: " + otherRouter.getNodeQueue());
+          
+            /*----------------------------------ノードリスト比較部分-------------------------------------------*/
+            
+            Collection<Message> myMessages = getHost().getMessageCollection();
+          for (Message myMsg : myMessages) {
+                DTNHost myDestination = myMsg.getTo();
+                if (otherRouter.getNodeQueue().contains(myDestination.getAddress())) {
+                	
+                    System.out.println("遭遇ノード:"+otherAddress+"はメッセージID:" + myMsg.getId() + "の宛先" + myDestination.getAddress() + "とすれ違ってます");
+                   }
+                }
+          System.out.println("---------------------------------------------------------------------");
+        
+          /*-------------------------------------------------------------------------------------------------*/    
         }
-    }   
+        
+     }   
 }
