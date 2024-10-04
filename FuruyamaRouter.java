@@ -77,15 +77,15 @@ public class FuruyamaRouter extends ActiveRouter {
     public void update() {
         super.update();
         if (isTransferring() || !canStartTransfer()) {
-            return; // transferring, don't try other connections yet
+            return; // 転送中なので、まだ他の接続を試さないでください
         }
 
-        // Try first the messages that can be delivered to final recipient
+        // まずは最終受信者に配信できるメッセージを試してください
         if (exchangeDeliverableMessages() != null) {
-            return; // started a transfer, don't try others (yet)
+            return; // 転送を開始しました。他の転送はまだ試さないでください
         }
 
-        // then try any/all message to any/all connection
+        // 次に、すべてのメッセージをすべての接続に試します
         this.tryAllMessagesToAllConnections();
     }
 
@@ -102,33 +102,35 @@ public class FuruyamaRouter extends ActiveRouter {
             DTNHost otherHost = con.getOtherNode(getHost());
             int otherAddress = otherHost.getAddress();
             
-            
             // ノードIDをキューに追加
             if (!nodeQueue.contains(otherAddress)) {
                 if (nodeQueue.size() >= MAX_QUEUE_SIZE) {
                     nodeQueue.removeFirst(); // キューの先頭を削除
                 }
                 nodeQueue.addLast(otherAddress); // 新しいノードIDを追加
-                System.out.println("着目ノード:"+ getHost());
-                System.out.println( "追加されたノード:" + otherAddress +", 追加後の"+ getHost()+"のキュー: " + nodeQueue);
+                System.out.println("着目ノード:" + getHost());
+                System.out.println("追加されたノード:" + otherAddress + ", 追加後の" + getHost() + "のキュー: " + nodeQueue);
             }
             FuruyamaRouter otherRouter = (FuruyamaRouter) otherHost.getRouter();
-            System.out.println("相手ノード(ノードID:" + otherAddress +")のノードリスト: " + otherRouter.getNodeQueue());
-          
+            System.out.println("相手ノード(ノードID:" + otherAddress + ")のノードリスト: " + otherRouter.getNodeQueue());
+
             /*----------------------------------ノードリスト比較部分-------------------------------------------*/
             
             Collection<Message> myMessages = getHost().getMessageCollection();
-          for (Message myMsg : myMessages) {
+            for (Message myMsg : myMessages) {
                 DTNHost myDestination = myMsg.getTo();
                 if (otherRouter.getNodeQueue().contains(myDestination.getAddress())) {
-                	
-                    System.out.println("遭遇ノード:"+otherAddress+"はメッセージID:" + myMsg.getId() + "の宛先" + myDestination.getAddress() + "とすれ違ってます");
-                   }
+                    System.out.println("遭遇ノード:" + otherAddress + "はメッセージID:" + myMsg.getId() + "の宛先" + myDestination.getAddress() + "とすれ違ってます");
+
+                    // メッセージを優先的に渡す処理
+                    if (exchangeDeliverableMessages() != null) {
+                        // メッセージが配信された場合、処理を終了
+                        return;
+                    }
                 }
-          System.out.println("---------------------------------------------------------------------");
-        
-          /*-------------------------------------------------------------------------------------------------*/    
+            }
+            System.out.println("---------------------------------------------------------------------");
         }
-        
-     }   
+    }
+   
 }
