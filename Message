@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A message that is created at a node or passed between nodes.
@@ -54,12 +55,8 @@ public class Message implements Comparable<Message> {
 	
 	/** Application ID of the application that created the message */
 	private String	appID;
-	
-	/**/
-	
 	private int priority;
 	
-	/**/
 	static {
 		reset();
 		DTNSim.registerForReset(Message.class.getCanonicalName());
@@ -89,13 +86,17 @@ public class Message implements Comparable<Message> {
 		this.properties = null;
 		this.appID = null;
 		
-		/**/
-		this.priority = 0;
-		/**/
-		
 		Message.nextUniqueId++;
 		addNodeOnPath(from);
 	}
+	public int getPriority() {
+        return this.priority;
+    }
+
+    // 優先度を設定するメソッド
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 	
 	/**
 	 * Returns the node this message is originally from
@@ -355,12 +356,10 @@ public class Message implements Comparable<Message> {
 	 * Compares two messages by their ID (alphabetically).
 	 * @see String#compareTo(String)
 	 */
-	/*
-	 * public int compareTo(Message m) {
+	public int compareTo(Message m) {
 		return toString().compareTo(m.toString());
 	}
 	
-	*/
 	/**
 	 * Resets all static fields to default values
 	 */
@@ -383,33 +382,10 @@ public class Message implements Comparable<Message> {
 	public void setAppID(String appID) {
 		this.appID = appID;
 	}
+
+	public double getElapsedTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-	/**/
-	
-	 // コンストラクタ
-    public Message(String id, DTNHost to) {
-        this.id = id;
-        this.to = to;
-        this.priority = 0; // デフォルトの優先度を0に設定
-    }
-    // 優先度を取得するメソッド
-    public int getPriority() {
-        return priority;
-    }
-
-    // 優先度を設定するメソッド
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-    
-
-    // 優先度に基づいて比較するメソッド
-    @Override
-    public int compareTo(Message other) {
-        return Integer.compare(other.priority, this.priority); // 優先度の高い順に並べ替え
-    }
-
-
-	
-	/**/
 }
