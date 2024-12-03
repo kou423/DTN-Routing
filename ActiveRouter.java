@@ -465,32 +465,6 @@ public abstract class ActiveRouter extends MessageRouter {
 		return tryMessagesToConnections(messages, connections);
 	}
 		
-	/**/
-	
-	protected boolean tryMessageToAllConnections(Message msg) {
-        List<Connection> connections = getConnections();
-        for (Connection con : connections) {
-            if (canSendMessageTo(con, msg)) {
-                sendMessage(con, msg);
-                return true; // 転送が成功した場合
-            }
-        }
-        return false; // すべての接続に対して転送が失敗した場合
-    }
-
-	
-	   // メッセージを送信できるかどうかを確認するメソッド
-    protected boolean canSendMessageTo(Connection con, Message msg) {
-        // 実装は省略
-        return true;
-    }
-
- // メッセージを送信するメソッド
-    protected void sendMessage(Connection con, Message msg) {
-        // 実装は省略
-    }
-	/**/
-	
 	/**
 	 * Exchanges deliverable (to final recipient) messages between this host
 	 * and all hosts this host is currently connected to. First all messages
