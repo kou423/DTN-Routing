@@ -308,15 +308,124 @@ MaxPropRouting&70,re7767&re86832&\\
 %%図{ttl720latencyavg}
 
 
+
 \section{過密度マップ TTL=300}
-\subsection{データ到達率}
+TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl300deliveryprob}、表\ref{kamituTtl300latencyavg}、表\ref{kamituTtl300dropped}にそれぞれ示す。
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ到達率(過密度マップ TTL300)}
+      \label{kamituTtl300deliveryprob}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ平均遅延時間(過密度マップ TTL300)}
+      \label{kamituTtl300latencyavg}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ削除数(過密度マップ TTL300)}
+      \label{kamituTtl300dropped}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+\subsection{メッセージ到達率}
 データ到達率は，優先度の高くなる優先TTLを設定した上で，ノード数が多くなるとEpidemic Routingとの差が大きくなった．ベースとなるTTLが300の場合，Epidemic Roitingより僅かに良い結果が得られた．
 \subsection{メッセージ平均遅延時間}
 メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少した．
 \subsection{メッセージ削除数}
 
 
-\section{TTL=720}
+\section{過密度マップ TTL=720}
+TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl720deliveryprob}、表\ref{kamituTtl720latencyavg}、表\ref{kamituTtl720dropped}にそれぞれ示す。
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ到達率(過密度マップ TTL720)}
+      \label{kamituTtl720deliveryprob}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ平均遅延時間(過密度マップ TTL720)}
+      \label{kamituTtl720latencyavg}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ削除数(過密度マップ TTL720)}
+      \label{kamituTtl720dropped}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&&&\\
+\hline
+PriorityMessageRouting&&&\\
+\hline
+MaxPropRouting&&&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
 \subsection{データ到達率}
 データ到達率は，ベースTTLが300の時に比べ，ノード数が300の時に1\%弱上昇した．
 \subsection{メッセージ平均遅延時間}
