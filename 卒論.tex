@@ -11,6 +11,7 @@
 \usepackage{bigstrut}
 \usepackage{multirow}
 \usepackage{amsfonts}
+\usepackage{float}
 
 %%----------------------------------------------------------------------------------------------------------------------
 %% 表紙の記載事項
@@ -120,7 +121,7 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 本研究を行う上での条件を以下に示す．
 \begin{quote}
  \begin{itemize}
-  \item default\_map（初期状態のThe ONEシミュレータに搭載されている）及びstar\_mapを用いる．
+  \item 図\ref{default_map}に示すdefault\_map（初期状態のThe ONEシミュレータに搭載されている）、及び\ref{star_map}に示すstar\_mapを用いる．
   \item ノードは，歩行者と車に割り振る．
   \item 歩行者には，歩くスピードが遅い人と速い人がいることを想定し，それぞれ1.8km/hから5.4km/hとする．
   \item 車は，法定速度の多い40km/hから60km/hを想定する．
@@ -128,7 +129,7 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
   \item 移動モデルは，各ノードが目的地を定めて最短経路で動くと仮定し，ShortestPathMapBasedMovementを用いる．
  \end{itemize}
 \end{quote}
-本研究を行うためのシミュレーションパラメータを表1に示す．
+本研究を行うためのシミュレーションパラメータを表\ref{example:terminology}に示す．
 
 \begin{table}[h]
     \begin{center}
@@ -166,17 +167,26 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
       \end{tabular}
     \end{center}
 \end{table}
-
+%%図default_map
+%%図star_map
 %%=============第４章=============
 \chapter{実験結果}
 
 \section{疎密度マップ TTL=300}
-\subsection{データ到達率}
-データ到達率は，優先度の高くなる優先TTLを設定した上で，ノード数が多くなるとEpidemic Routingとの差が大きくなった．ベースとなるTTLが300の場合，Epidemic Roitingより僅かに良い結果が得られた．
-\subsection{メッセージ平均遅延時間}
-メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少した．
-\subsection{メッセージ削除数}
+TTLを300、720に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTTL300}、表\ref{somituTTL720}に示す。
 
+\section{TTL=300}
+\subsection{データ到達率}
+図\ref{ttl300deliveryprob}に示すように、データ到達率は，適切な優先TTLを設定した上で，ノード数が多くなるとEpidemic Routingとの差が大きくなった．ベースとなるTTLが300の場合，Epidemic Roitingより僅かに良い結果が得られた．一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
+%%図ttl300deliveryprob
+\subsection{メッセージ平均遅延時間}
+図\ref{ttl300latencyavg}に示すように、メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少し、EpidemicRoutingと比較した場合においても良い結果が得られた。一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
+
+%%図ttl300latencyavg
+
+\subsection{メッセージ削除数}
+図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTL切れやバッファ溢れなどによるメッセージの削除となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除し、新しいメッセージを取得するという手法によって、バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除が行われている。
+%%図ttl300dropped
 
 \section{TTL=720}
 \subsection{データ到達率}
