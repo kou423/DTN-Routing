@@ -173,7 +173,7 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 \chapter{実験結果}
 
 \section{疎密度マップ TTL=300}
-TTLを300に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
+TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL300)}
@@ -194,7 +194,7 @@ MaxPropRouting&0.4688&0.8927&\\
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ平均待ち時間(疎密度マップ TTL300)}
+      \caption[]{メッセージ平均遅延時間(疎密度マップ TTL300)}
       \label{somituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -223,7 +223,7 @@ EpidemicRouting&9562&92280 &250810\\
 \hline
 PriorityMessageRouting&8722&93216&253894\\
 \hline
-MaxPropRouting&3447&86832&\\
+MaxPropRouting&re3447&re86832&\\
 \hline
       \end{tabular}
     \end{center}
@@ -233,15 +233,12 @@ MaxPropRouting&3447&86832&\\
 %%図ttl300deliveryprob
 \subsection{メッセージ平均遅延時間}
 図\ref{ttl300latencyavg}に示すように、メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少し、EpidemicRoutingと比較した場合においても良い結果が得られた。一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
-
-%%図ttl300latencyavg
-
 \subsection{メッセージ削除数}
 図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTL切れやバッファ溢れなどによるメッセージの削除となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除し、新しいメッセージを取得するという手法によって、バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除が行われている。
 %%図ttl300dropped
 
 \section{疎密度マップ TTL=720}
-TTLを300に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
+TTLを300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL720)}
@@ -262,7 +259,7 @@ MaxPropRouting&0.5497&0.8927&\\
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ平均待ち時間(疎密度マップ TTL720)}
+      \caption[]{メッセージ平均遅延時間(疎密度マップ TTL720)}
       \label{somituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -296,13 +293,19 @@ MaxPropRouting&70,re7767&re86832&\\
     \end{center}
 \end{table}
 \subsection{メッセージ到達率}
-データ到達率は，ベースTTLが300の時に比べ，ノード数が300の時に1\%弱上昇した．
+図\ref{ttl300deliveryprob}と下に示す図{ttl720deliveryprob}から分かるように、データ到達率は，ベースTTLが300の時に比べ，ノード数が300の時に1\%弱上昇した．また、EpidemicRoutingはTTLが720に増加すると、ノード数が上昇するにつれて、到達率の低下が確認できたが、PMrouterではノード数の上昇による到達率の低下は確認できなかった。
+
+%%図ttl300deliveryprob
+
 \subsection{メッセージ平均遅延時間}
-メッセージ平均遅延時間は，データ到達率と同様にノード数が300の時に1000秒伸びた．
+図\ref{ttl300latencyavg}と下に示す図{ttl720latencyavg}から分かるように、メッセージ平均遅延時間は，3つのルーティング手法それぞれにおいて、TTL300の時と比べて、遅延時間は長くなる結果となった。一方で、ノード数が300の場合において、PMrouterとMaxPropを比較すると、遅延時間においてMaxPropよりも優れた結果を得られた。
+
+%%図ttl720latencyavg
+
 \subsection{メッセージ削除数}
-メッセージ削除数もまた同様に，ノード数が300の時に1000個近くのメッセージが削除された．
+図\ref{ttl300latencyavg}と下に示す図{ttl720latencyavg}から分かるように、TTL増加によるメッセージ削除数は大きく変わらなかった。一方で、EpidemicRoutingと比較すると、TTL300の時と同様に、PMrouterの方が多く削除されてしまっている。
 
-
+%%図{ttl720latencyavg}
 
 
 \section{過密度マップ TTL=300}
