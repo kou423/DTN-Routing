@@ -173,10 +173,62 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 \chapter{実験結果}
 
 \section{疎密度マップ TTL=300}
-TTLを300、720に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTTL300}、表\ref{somituTTL720}に示す。
+TTLを300に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ到達率(疎密度マップ TTL300)}
+      \label{somituTtl300deliveryprob}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&0.3523&0.6001&0.6578\\
+\hline
+PriorityMessageRouting&0.3948&0.6282&0.7498\\
+\hline
+MaxPropRouting&0.4688&0.8927&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
 
-\section{TTL=300}
-\subsection{データ到達率}
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ平均待ち時間(疎密度マップ TTL300)}
+      \label{somituTtl300latencyavg}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&9063.5916&8910.7454&8046.2942\\
+\hline
+PriorityMessageRouting&11181.6049&7345.0537&5241.7455\\
+\hline
+MaxPropRouting&8777.8615&4528.0321
+&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ削除数(疎密度マップ TTL300)}
+      \label{somituTtl300dropped}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&9562&92280 &250810\\
+\hline
+PriorityMessageRouting&8722&93216&253894\\
+\hline
+MaxPropRouting&3447&86832&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+\subsection{メッセージ到達率}
 図\ref{ttl300deliveryprob}に示すように、データ到達率は，適切な優先TTLを設定した上で，ノード数が多くなるとEpidemic Routingとの差が大きくなった．ベースとなるTTLが300の場合，Epidemic Roitingより僅かに良い結果が得られた．一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
 %%図ttl300deliveryprob
 \subsection{メッセージ平均遅延時間}
@@ -188,8 +240,62 @@ TTLを300、720に設定したときの、「メッセージ到達率」，「�
 図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTL切れやバッファ溢れなどによるメッセージの削除となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除し、新しいメッセージを取得するという手法によって、バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除が行われている。
 %%図ttl300dropped
 
-\section{TTL=720}
-\subsection{データ到達率}
+\section{疎密度マップ TTL=720}
+TTLを300に設定したときの、「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ到達率(疎密度マップ TTL720)}
+      \label{somituTtl720deliveryprob}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&0.3729&0.4204&0.4356\\
+\hline
+PriorityMessageRouting&0.3948&0.6377&0.7478\\
+\hline
+MaxPropRouting&0.5497&0.8927&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ平均待ち時間(疎密度マップ TTL720)}
+      \label{somituTtl720latencyavg}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&12670.4281&9447.9813&8310.329\\
+\hline
+PriorityMessageRouting&11181.6049&8219.5436&6133.3263\\
+\hline
+MaxPropRouting&11475.7576&9380.4749&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[H]
+ \begin{center}
+      \caption[]{メッセージ削除数(疎密度マップ TTL720)}
+      \label{somituTtl720dropped}
+      \begin{tabular}{|c|c|c|c|}
+\hline
+&100&300&500\\
+\hline
+EpidemicRouting&5265&83972&242620\\
+\hline
+PriorityMessageRouting&8722&92100&253684\\
+\hline
+MaxPropRouting&70,re7767&re86832&\\
+\hline
+      \end{tabular}
+    \end{center}
+\end{table}
+\subsection{メッセージ到達率}
 データ到達率は，ベースTTLが300の時に比べ，ノード数が300の時に1\%弱上昇した．
 \subsection{メッセージ平均遅延時間}
 メッセージ平均遅延時間は，データ到達率と同様にノード数が300の時に1000秒伸びた．
