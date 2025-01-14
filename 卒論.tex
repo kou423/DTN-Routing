@@ -13,6 +13,10 @@
 \usepackage{amsfonts}
 \usepackage{float}
 
+\usepackage{listings}
+\renewcommand{\lstlistingname}{表}
+\usepackage{framed}
+
 %%----------------------------------------------------------------------------------------------------------------------
 %% 表紙の記載事項
 %%----------------------------------------------------------------------------------------------------------------------
@@ -482,21 +486,340 @@ MaxPropRouting&&&\\
 %ここは，「付録小小節」である．\textsf{\yen appendix}以降に\textsf{\yen subsubsection\{見出し文字列\}}と書けば，
 %「付録小小節見出し」が設定される．
 %「小小節見出し」と同じ文字サイズ，同じ上下余白である．
-osm ファイルとは，オープンストリートマップという自由に利用でき，共同編集機能のある世界地図を
-作成する共同作業プロジェクト(参考文献OSM)にてエクスポートすることができるファイル形式である．osmファイルの
-状態では，TheONEシミュレータで用いることができない．
+osm ファイルとは，オープンストリートマップという自由に利用でき，共同編集機能のある世界地図を作成する共同作業プロジェクト(参考文献OSM)にてエクスポートすることができるファイル形式である．osmファイルの状態では，TheONEシミュレータで用いることができない．
 \subsection{wktファイル}
 wktファイルとは、地理情報をテキスト形式で表現するファイル形式である．TheONEシミュレータで読み込めるマップの形式はwktファイルのみであるため、osmファイルは何らかの形でwktファイルに変更する必要がある．
 \section{osmファイルとwktファイル}
 
 \subsection{OpenJUMPを用いたosmファイルからwktファイルへの変換}
-参考文献に倣いOpenJUMPというソフトを用いてosmファイルからwktファイルへの変換を行う．OpenJUMP とは，ユーザが地理データを表示したり編集したりすることが出るGIS(地理情報システム)
-である．osmファイルをOpenJUMPで開くと図\ref{}のようになり，ここから様々なノードなどの編集が
-できる．しかし、この方法は動作環境によってはOpenJUMP上でosmファイルを開くことができないという現象が確認できた．
+参考文献に倣いOpenJUMPというソフトを用いてosmファイルからwktファイルへの変換を行う．OpenJUMP とは，ユーザが地理データを表示したり編集したりすることが出るGIS(地理情報システム)である．osmファイルをOpenJUMPで開くと図\ref{}のようになり，ここから様々なノードなどの編集ができる．しかし、この方法は動作環境によってはOpenJUMP上でosmファイルを開くことができないという現象が確認できた．
 \subsection{QGISを用いたosmファイルからwktファイルへの変換}
-上記の問題を解決するため、QGISという別のソフトを用いる。QGIS とはGNU General Public License で提供されている，OpenJUMP と同じGIS(地理情報システ
-ム) であり，OpenJUMPと比べて多くの機能が備えられている．osmファイルに対応しており，このソフ
-トを用いてosmファイルをshpファイルに変換する．osmファイルを別のファイル形式に変換後、そのファイルを改めてOpenJUMP上で開くことで、wktファイルへの変換を行った．
+上記の問題を解決するため、QGISという別のソフトを用いる。QGIS とはGNU General Public License で提供されている，OpenJUMP と同じGIS(地理情報システム) であり，OpenJUMPと比べて多くの機能が備えられている．osmファイルに対応しており，このソフトを用いてosmファイルをshpファイルに変換する．osmファイルを別のファイル形式に変換後，そのファイルを改めてOpenJUMP上で開くことで，wktファイルへの変換を行った．
 \section{マップ導入時の問題}
-上記の二つのどちらの場合でも、OpenJUMPにファイルを読み込んだ際、マップの縮尺が極端に小さくなってしまった．TheONEシミュレータに導入した際も、極端に小さくなった状態で実行されてしまうため、正しい結果が得られなくなってしまった．この問題を解決することができなかったため、実在するマップでの実験を断念した．
+上記の二つのどちらの場合でも，OpenJUMPにファイルを読み込んだ際，マップの縮尺が極端に小さくなってしまった．TheONEシミュレータに導入した際も，極端に小さくなった状態で実行されてしまうため，正しい結果が得られなくなってしまった．この問題を解決することができなかったため，実在するマップでの実験を断念した．
+
+
+%%=============プログラム=============
+\section{プログラム}
+\lstset{
+    frame=single,
+    numbers=left,
+    tabsize=2
+}
+\subsection{PriorityMessageRouter.java}
+\begin{framed}
+\begin{verbatim}
+package routing;
+
+import core.Connection;
+import core.DTNHost;
+import core.Message;
+import core.Settings;
+
+import gui.EventLogPanel;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class PriorityMessageRouter extends ActiveRouter {
+    private static final int MAX_QUEUE_SIZE = 20; // キューの最大サイズ
+    private LinkedList<Integer> nodeQueue; // ノード番号を格納するキュー
+    private Timer timer; // タイマー
+
+    /**
+     * @param s
+     **/
+    public PriorityMessageRouter(Settings s) {
+        super(s);
+        nodeQueue = new LinkedList<>();
+        timer = new Timer();
+        startQueueCleanupTask();
+    }
+
+    public LinkedList<Integer> getNodeQueue() {
+        return this.nodeQueue;
+    }
+
+    /**
+     * @param r
+     **/
+    protected PriorityMessageRouter(PriorityMessageRouter r) {
+        super(r);
+        this.nodeQueue = new LinkedList<>(r.nodeQueue);
+        this.timer = new Timer();
+        startQueueCleanupTask();
+    }
+
+    private void startQueueCleanupTask() {//常に最新のすれ違った履歴にする
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                cleanUpQueue();
+            }
+        }, 0, 5 * 60 * 1000); // 5分ごとにノードリストをクリア
+    }
+
+    private void cleanUpQueue() {
+        if (nodeQueue.size() > MAX_QUEUE_SIZE) {
+            nodeQueue.removeFirst(); // キューの先頭（古い要素）を削除
+        }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (isTransferring() || !canStartTransfer()) {
+            return;
+        }
+
+        if (exchangeDeliverableMessages() != null) {
+            return;
+        }
+
+        this.tryAllMessagesToAllConnections();
+    }
+
+    @Override
+    public PriorityMessageRouter replicate() {
+        return new PriorityMessageRouter(this);
+    }
+
+    public void changedConnection(Connection con) {
+        super.changedConnection(con);
+        
+        // 新しく接続されたノードのIDを取得
+        if (con.isUp()) {
+            DTNHost otherHost = con.getOtherNode(getHost());
+            int otherAddress = otherHost.getAddress();
+            
+            System.out.println("-----");
+            
+            // ノードIDをキューに追加
+            if (!nodeQueue.contains(otherAddress)) {
+                if (nodeQueue.size() >= MAX_QUEUE_SIZE) {
+                    nodeQueue.removeFirst(); // キューの先頭を削除
+                }
+                nodeQueue.addLast(otherAddress); // 新しいノードIDを追加
+                System.out.println("着目ノード:" + getHost());
+                System.out.println("追加されたノード:" + otherAddress + ", 
+                追加後の" + getHost() + "のキュー: " + nodeQueue);
+            }
+            PriorityMessageRouter otherRouter = 
+            (PriorityMessageRouter) otherHost.getRouter();
+            System.out.println("相手ノード(ノードID:" + otherAddress + 
+            ")のノードリスト: " + otherRouter.getNodeQueue());
+      
+            Collection<Message> myMessages = 
+            getHost().getMessageCollection();
+            
+            System.out.println("保有メッセージ：" + myMessages);
+
+            for (Message myMsg : myMessages) {
+                DTNHost myDestination = myMsg.getTo();
+                if (otherRouter.getNodeQueue().contains
+                (myDestination.getAddress())) {
+                    System.out.println("遭遇ノード:" + otherAddress + 
+                    "はメッセージID:" + myMsg.getId() + "の宛先" + 
+                    myDestination.getAddress() + "とすれ違ってます。 ");
+                    System.out.print("メッセージ更新前: [");
+                    for (Message msg : myMessages) {
+                        System.out.print("ID:" + msg.getId() + "優先度:" + 
+                        msg.getPriority() + " [" + msg.getTtl() + "] " + 
+                        ", ");
+                    }
+                    System.out.println("]");
+
+                    // 同一の宛先が見つかった場合、優先度を+1
+                    // メッセージの優先度を上げる（getメソッド）
+                    myMsg.setPriority(myMsg.getPriority() + 1);
+                    
+                    // 優先度が上がったメッセージのTTLを変更
+                    myMsg.setTtl(200); // TTL変更（無限に生存させる場合は「-1」にする）
+
+                    System.out.print("メッセージ更新後: [");
+                    for (Message msg : myMessages) {
+                        System.out.print("ID:" + msg.getId() + "優先度:" + 
+                        msg.getPriority() + " [" + msg.getTtl() + "] " + 
+                        ", ");
+                    }
+                    System.out.println("]");  
+
+                    // メッセージの優先度を元に戻す
+                    （どのメッセージの優先度が更新されたかを見やすくするため）  
+                    myMsg.setPriority(myMsg.getPriority() - 1);
+                }
+            }
+
+            System.out.println("-----");
+        }
+    }
+}
+\end{verbatim}
+\end{framed}
+
+\subsection{セッティング（default\_map及びstar\_map）}
+\begin{framed}
+\begin{verbatim}
+#
+# Default settings for the simulation
+#
+
+## Scenario settings
+Scenario.name = default_scenario
+Scenario.simulateConnections = true
+Scenario.updateInterval = 0.1
+# 43200s == 12h
+Scenario.endTime = 43200
+
+
+## Interface-specific settings:
+# type : which interface class the interface belongs to
+# For different types, the sub-parameters are interface-specific
+# For SimpleBroadcastInterface, the parameters are:
+# transmitSpeed : transmit speed of the interface (bytes per second) 
+# transmitRange : range of the interface (meters)
+
+# "Bluetooth" interface for all nodes
+btInterface.type = SimpleBroadcastInterface
+# Transmit speed of 2 Mbps = 250kBps
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+
+
+
+# Define 6 different node groups
+Scenario.nrofHostGroups = 2 #歩行者と車の2種類
+
+## Group-specific settings:
+# groupID : Group's identifier. Used as the prefix of host names
+# nrofHosts: number of hosts in the group
+# movementModel: movement model of the hosts 
+(valid class name from movement package)
+# waitTime: minimum and maximum wait times 
+(seconds) after reaching destination
+# speed: minimum and maximum speeds (m/s) when moving on a path
+# bufferSize: size of the message buffer (bytes)
+# router: router used to route messages 
+(valid class name from routing package)
+# activeTimes: Time intervals when the nodes in the group are active 
+(start1, end1, start2, end2, ...)
+# msgTtl : TTL (minutes) of the messages created by this host group, 
+default=infinite
+
+## Group and movement model specific settings
+# pois: Points Of Interest indexes and probabilities 
+(poiIndex1, poiProb1, poiIndex2, poiProb2, ... )
+#       for ShortestPathMapBasedMovement
+# okMaps : which map nodes are OK for the group (map file indexes), 
+default=all 
+#          for all MapBasedMovent models
+# routeFile: route's file path - for MapRouteMovement
+# routeType: route's type - for MapRouteMovement
+
+
+# Common settings for all groups
+Group.movementModel = ShortestPathMapBasedMovement
+Group.router = EpidemicRouter
+Group.bufferSize = 50M
+Group.waitTime = 0, 120
+# All nodes have the bluetooth interface
+Group.nrofInterfaces = 1
+Group.interface1 = btInterface
+# Walking speeds
+Group.speed = 0.5, 1.5 #歩行者の速さ
+# Message TTL of 300 minutes (5 hours)
+Group.msgTtl = 300 #TTLによって変更
+
+Group.nrofHosts = 50 #ノード数によって変更
+
+# group1 (pedestrians) specific settings
+Group1.groupID = p
+
+# group2 specific settings
+Group2.groupID = c
+# cars can drive only on roads
+Group2.okMaps = 1
+# 10-50 km/h
+Group2.speed = 11.1, 16.65 #車の速さ
+
+
+
+## Message creation parameters 
+# How many event generators
+Events.nrof = 1
+# Class of the first event generator
+Events1.class = MessageEventGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.interval = 25,35
+# Message sizes (500kB - 1MB)
+Events1.size = 500k,1M
+# range of message source/destination addresses
+Events1.hosts = 0,99 #ノード数によって変更
+# Message ID prefix
+Events1.prefix = M
+
+
+## Movement model settings
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = 1
+# World's size for Movement Models without implicit size 
+(width, height; meters)
+MovementModel.worldSize = 4500, 3400
+# How long time to move hosts in the world before real simulation
+MovementModel.warmup = 1000
+
+## Map based movement -movement model specific settings
+MapBasedMovement.nrofMapFiles = 4 #star_mapのみの形成時には1にする
+
+MapBasedMovement.mapFile1 = data/roads.wkt #star_map時には該当するwktファイルを挿入
+MapBasedMovement.mapFile2 = data/main_roads.wkt #必要に応じて消す
+MapBasedMovement.mapFile3 = data/pedestrian_paths.wkt #必要に応じて消す
+MapBasedMovement.mapFile4 = data/shops.wkt #必要に応じて消す
+
+## Reports - all report names have to be valid report classes
+
+# how many reports to load
+Report.nrofReports = 1
+# length of the warm up period (simulated seconds)
+Report.warmup = 0
+# default directory of reports 
+(can be overridden per Report with output setting)
+Report.reportDir = reports/
+# Report classes to load
+Report.report1 = MessageStatsReport
+
+## Default settings for some routers settings
+ProphetRouter.secondsInTimeUnit = 30
+SprayAndWaitRouter.nrofCopies = 6
+SprayAndWaitRouter.binaryMode = true
+
+## Optimization settings -- these affect the speed of the simulation
+## see World class for details.
+Optimization.cellSizeMult = 5
+Optimization.randomizeUpdateOrder = true
+
+
+## GUI settings
+
+# GUI underlay image settings
+GUI.UnderlayImage.fileName = data/helsinki_underlay.png
+# Image offset in pixels (x, y)
+GUI.UnderlayImage.offset = 64, 20
+# Scaling factor for the image
+GUI.UnderlayImage.scale = 4.75
+# Image rotation (radians)
+GUI.UnderlayImage.rotate = -0.015
+
+# how many events to show in the log panel (default = 30)
+GUI.EventLogPanel.nrofEvents = 100
+# Regular Expression log filter 
+(see Pattern-class from the Java API for RE-matching details)
+#GUI.EventLogPanel.REfilter = .*p[1-9]<->p[1-9]$
+\end{verbatim}
+\end{framed}
 \end{document}
