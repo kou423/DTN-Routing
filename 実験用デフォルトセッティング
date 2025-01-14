@@ -71,8 +71,7 @@ Group2.groupID = c
 # cars can drive only on roads
 Group2.okMaps = 1
 # 10-50 km/h
-Group2.speed = 2.7, 13.9
-
+Group2.speed = 11.1, 16.65
 
 
 
