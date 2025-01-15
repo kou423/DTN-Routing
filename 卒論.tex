@@ -638,7 +638,8 @@ public class PriorityMessageRouter extends ActiveRouter {
                     myMsg.setPriority(myMsg.getPriority() + 1);
                     
                     // 優先度が上がったメッセージのTTLを変更
-                    myMsg.setTtl(200); // TTL変更（無限に生存させる場合は「-1」にする）
+                    // 無限に生存させる場合は「-1」にする
+                    myMsg.setTtl(200);
 
                     System.out.print("メッセージ更新後: [");
                     for (Message msg : myMessages) {
