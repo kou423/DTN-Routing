@@ -82,29 +82,35 @@ DTNの特徴的な技術として，蓄積運搬形転送がある．これは�
 \section{DTN}
 DTNとは，Delay，Disruption，Disconnection Tolerant Networkingの略で，大きな遅延や通信途絶，繋がっていない状態の方が多い環境においても，適切な情報通信を現実的なコストで実現できる技術であり，中継転送を利用することにより，エンドツーエンドの通信を可能とする[5]．要素技術として，バンドルプロトコルとストアアンドフォワード方式が存在する．インターネットでのデータ転送にはトランスポート層のTCPを使用するが，通信に遅延や切断が生じると，通信品質が劣化してしまう．そのため，TCPによる通信では，エンドツーエンドのリンクが安定している必要がある．DTNでは，不安定なリンクにも対応しなければならないため，トランスポート層の上に「バンドル」と呼ばれるプロトコルを乗せることで劣通信環境に対応する．バンドルプロトコルの中でも，データ転送にはストアアンドフォワード方式を用いる[4]．ストアアンドフォワード方式は，通信が不可能な状態である時にデータを蓄積し，通信が可能な状態である時にデータを転送する方式である[1]．
 
-\section{Epidemic Routing}
+\section{従来手法}
+DTNの研究として代表的な手法がEpidemic Routingであるが，網資源の管理やメッセージ到達率向上といった効率的な手法として，Spray And WaitやMaxProp，ProPHET等が存在する．以下にそれら手法の動作を示す．
+
+\subsection{Epidemic Routing}
 蓄積運搬形転送に基づく最も初期に提案された手法に，感染形中継転送方式であるEpidemic Routingと呼ばれる手法が存在する．メッセージを保持する端末が他の端末と接触をすることで通信を行い，複製メッセージを拡散させながら網内の末端までメッセージを届けることを可能にし，いずれかのメッセージが宛先端末に到達する．この手法は，網資源がある場合には，あらゆる方式の中で最も優れた遅延性能を示す[1]．
 
-しかし，問題点として，受信端末は複製メッセージをさらに複製するため，網資源を最も消費してしまう欠点がある．よって，拡散させることに重きを置いているため，効率の良いルーティングとは言い難い．Epidemic Routingのフローを図1に示す．
+しかし，問題点として，受信端末は複製メッセージをさらに複製するため，網資源を最も消費してしまう欠点がある．よって，拡散させることに重きを置いているため，効率の良いルーティングとは言い難い．Epidemic Routingのフローを図\ref{EpidemicRouting}に示す．
+%%図{EpidemicRouter}
 
-画像1
 
-\section{Recovery Scheme（回復手法）}
-Epidemic Routingでは，メッセージが宛先に到達した後，メッセージの複製により網内に到達したメッセージが残存してしまう可能性がある．そのためにRecovery Schemeが提案された．この手法では，メッセージが到達した宛先ノードが，到達した事を知らせるためにメッセージのIDを載せたAnti-Paketを生成する．これにより，Anti-Paketを受信したノードは，該当するメッセージを削除することで，到達したメッセージの複製を抑制する[6]．Recovery Schemeのフローを図2に示す．
+\subsection{Recovery Scheme（回復手法）}
+Epidemic Routingでは，メッセージが宛先に到達した後，メッセージの複製により網内に到達したメッセージが残存してしまう可能性がある．そのためにRecovery Schemeが提案された．この手法では，メッセージが到達した宛先ノードが，到達した事を知らせるためにメッセージのIDを載せたAnti-Paketを生成する．これにより，Anti-Paketを受信したノードは，該当するメッセージを削除することで，到達したメッセージの複製を抑制する[6]．Recovery Schemeのフローを図\ref{RecoveryScheme}に示す．
 
-画像2
-
-\section{Spray And Wait}
+\subsection{Spray And Wait}
 Spray And Waitは，メッセージ毎に複製回数が静的に設定され，メッセージを複製する度に複製回数が半分に更新される．メッセージは，Spray段階とWait段階の2つに段階を経て転送される[6]．生成元ノードではある整数Lが与えられ，メッセージの複製はそれぞれForward tokenと呼ばれる整数値nを保持する．生成元ノードではn=Lとなり，転送される度にnが半減し，n=1となった時にWait段階へ移行する．Wait段階では，メッセージの複製は行われず，直接，宛先ノードに接触した時のみメッセージを転送する[7]．複製回数が多すぎるとメッセージの削除が発生し，少なすぎると宛先に到達しない場合がある．
 
-問題点として，ネットワークの大きさやノード数の変化に応じて適切な最大生成数を設定することは困難である[8]．Spray And Waitのフローを図3に示す．
+問題点として，ネットワークの大きさやノード数の変化に応じて適切な最大生成数を設定することは困難である[8]．Spray And Waitのフローを図\ref{SprayAndWait}に示す．
 
 画像3
 
-\section{Max Prop}
-Max Propは，各ノードが保持しているメッセージに優先度を付け，他ノードと接触時に優先度の高いメッセージから順に複製メッセージを送信し，バッファの容量が不足した時に優先度の低いメッセージから順に破棄する手法である[7]．Max Propのフローを図4に示す．
+\subsection{Max Prop}
+Max Propは，各ノードが保持しているメッセージに優先度を付け，他ノードと接触時に優先度の高いメッセージから順に複製メッセージを送信し，バッファの容量が不足した時に優先度の低いメッセージから順に破棄する手法である[7]．Max Propのフローを図\ref{MaxProp}に示す．
 
 画像4
+
+\subsection{ProPHET}
+ProPHETは，ノード間の配送確率を計算することで，メッセージの転送効率化を実現するルーティング手法である．ノード間の接続感覚を考慮していないため，例えば逆方向に進む2つのノードが接続した場合でも，2ノード間の配送確率を高く更新してしまう．この場合，2つのノードは離れていくため，2ノード間の配送確率は高く設定するべきではないにも関わらず，ProPHETではこれを高く設定してしまう問題がある．
+
+そこで，ProPHET v2が提案された．これは，ノード間の接続間隔を考慮することで，この問題を解決する[9]．
 
 %%=============第３章=============
 \chapter{提案手法}
@@ -112,7 +118,7 @@ Max Propは，各ノードが保持しているメッセージに優先度を付
 Priority Message Router（以下，PMRouter）とは，端末がメッセージに優先度を設け，他ノードと接触したらそのノードのすれ違ったノード履歴より，自身の保有するメッセージの宛先と同一のメッセージを探す．存在した時に，そのメッセージの優先度を向上させ，バッファ内に存在できる時間をコントロールする．優先度の向上したメッセージに対しTTL（メッセージ有効時間）を変更することで，「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」の改善を図る手法である．基本的なメッセージの転送は感染形中継転送方式であり，優先度を設けることから，Epidemic Routingを拡張したものとなる．以降，全てのメッセージに備わっているTTLを「ベースTTL」，優先度の向上したメッセージのTTLを「優先TTL」と呼ぶ．Priority Message Routerのフローを図5に示す．
 
 \section{PMRouterの構成とアルゴリズム}
-PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで，各メッセージに優先度を設けるためのメソッドを追加する．次に各ノードのすれ違ったノードを格納するためのリストを追加し，自身の保有するメッセージの宛先と比較する．最後に，自身の保有するメッセージの宛先が他ノードのすれ違ったノードのリストに存在していれば，その宛先メッセージの優先度を向上させ，TTLをコントールする．
+PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで，各メッセージに優先度を設けるためのメソッドを追加する．次に各ノードのすれ違ったノードを格納するためのリストを追加し，自身の保有するメッセージの宛先と比較する．最後に，自身の保有するメッセージの宛先が他ノードのすれ違ったノードのリストに存在していれば，その宛先メッセージの優先度を向上させ，TTLをコントールする．Priority Message Routingのフローを図\ref{PriorityMessageRouting}に示す．
 
 %%=============第４章=============
 \chapter{評価}
@@ -120,7 +126,7 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 計算機シミュレーションにより，「メッセージ到達率」，「メッセージ平均待ち時間」，「メッセージ削除数」を評価尺度として提案方式の性能を検証する．また，従来手法（Epidemic Routing及びMax Prop）と提案手法の性能を比較し，提案手法の実用性を検証する．マップ形状は，疎密度であるdefault\_map及び過密度であるstar\_mapである．
 
 \section{実験環境}
-本研究では，The ONEシミュレータ（The Opportunistic Network Environment Simulator）を用いて実験を行う．The ONEシミュレータは，DTNの評価実験をするために作成されたフリーのネットワークシミュレータである．任意のルーティングやモビリティパターンを導入することができる．時間の遷移方式はタイムステップ型であり，標準では0.1秒毎に遷移する．また，通信可能距離と通信速度のみを考慮し，パケットのロスト，建物，電波干渉等による通信範囲の削減，保有メッセージの把握等の細かい部分は考慮していない[2]．このシミュレータではバンドル層以上のみでシミュレーションを行っているため，トランスポート層以下に関わる電波の輻輳や衝突等については，パラメータで妥当な値を設定しなければならない[9]．
+本研究では，The ONEシミュレータ（The Opportunistic Network Environment Simulator）を用いて実験を行う．The ONEシミュレータは，DTNの評価実験をするために作成されたフリーのネットワークシミュレータである．任意のルーティングやモビリティパターンを導入することができる．時間の遷移方式はタイムステップ型であり，標準では0.1秒毎に遷移する．また，通信可能距離と通信速度のみを考慮し，パケットのロスト，建物，電波干渉等による通信範囲の削減，保有メッセージの把握等の細かい部分は考慮していない[2]．このシミュレータではバンドル層以上のみでシミュレーションを行っているため，トランスポート層以下に関わる電波の輻輳や衝突等については，パラメータで妥当な値を設定しなければならない[10]．
 
 \section{条件とシミュレーションパラメータ}
 本研究を行う上での条件を以下に示す．
@@ -148,7 +154,7 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
         \hline
         試行回数 & 1回\\
         \hline
-        ノード数 & 100，300，500\\
+        ノード数 & 100，200，300\\
         \hline
         TTL & 300，720 [分]\\
         \hline
@@ -178,7 +184,11 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 \chapter{実験結果}
 
 \section{疎密度マップ TTL=300}
-TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
+TTL300における、ノード数を100、200、300に設定したときの、
+「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、
+表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
+ここで、MaxPropの削除数については、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)だけでなく、
+MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録している。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL300)}
@@ -203,13 +213,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6282\\
       \label{somituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
-&100&300&500\\
+&100&200&300\\
 \hline
 EpidemicRouting&9063.5916&9473.171&8910.7454\\
 \hline
 MaxPropRouting&8808.0453&6908.4267&4511.4366\\
 \hline
-PriorityMessageRouting&11181.6049&6908.427&7345.0537\\
+PriorityMessageRouting&11181.6049&5722.8538&7707.9552\\
 \hline
       \end{tabular}
     \end{center}
@@ -223,27 +233,36 @@ PriorityMessageRouting&11181.6049&6908.427&7345.0537\\
 \hline
 &100&200&300\\
 \hline
-EpidemicRouting&9562&&92280\\
-\hline
-PriorityMessageRouting&8722&40988&93206\\
+EpidemicRouting&9562&39899&92280\\
 \hline
 MaxPropRouting&685,re5851&436,re38112&re86815\\
 \hline
-PriorityMessageRouting&8722&40988&93206\\\hline
+PriorityMessageRouting&8722&40988&93206\\
+\hline
       \end{tabular}
     \end{center}
 \end{table}
 \subsection{メッセージ到達率}
-図\ref{ttl300deliveryprob}に示すように、データ到達率は，適切な優先TTLを設定した上で，ノード数が多くなるとEpidemic Routingとの差が大きくなった．ベースとなるTTLが300の場合，Epidemic Roitingより僅かに良い結果が得られた．一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
+図\ref{ttl300deliveryprob}に示すように、データ到達率は，適切な優先TTLを設定した上で比較を行うと，
+Epidemic Roitingより僅かに良い結果が得られた．
+また、ノード数が多くなるとEpidemic Routingとの差が大きくなった．
+一方で、MaxPropと比較すると、データ到達率は下回る結果となった。\\
 %%図ttl300deliveryprob
 \subsection{メッセージ平均遅延時間}
-図\ref{ttl300latencyavg}に示すように、メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少し、EpidemicRoutingと比較した場合においても良い結果が得られた。一方で、MaxPropと比較すると、データ到達率は下回る結果となった。
+図\ref{ttl300latencyavg}に示すように、メッセージ平均遅延時間は，
+ノード数が200の場合において、平均遅延時間は最も小さくなった。また、どのノード数においてもEpidemicRoutingと比較した場合に
+良い結果が得られた。
+一方で、MaxPropと比較すると、データ到達率は下回る結果となった。\\
+%%図ttl300latencyavg
+
 \subsection{メッセージ削除数}
-図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除し、新しいメッセージを取得するという手法によって、バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除が行われている。
+図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。
+また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除(removed)し、新しいメッセージを取得するという手法によって、
+バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除数が多くなっている。\\
 %%図ttl300dropped
 
 \section{疎密度マップ TTL=720}
-TTLを300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
+TTLを720における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL720)}
@@ -268,7 +287,7 @@ PriorityMessageRouting&0.3948&0.5347&0.6377\\
       \label{somituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
-&100&300&500\\
+&100&200&300\\
 \hline
 EpidemicRouting&12670.4281&10499.5253&9447.9813\\
 \hline
@@ -298,24 +317,28 @@ PriorityMessageRouting&8722&39950&92100\\
     \end{center}
 \end{table}
 \subsection{メッセージ到達率}
-図\ref{ttl300deliveryprob}と下に示す図{ttl720deliveryprob}から分かるように、データ到達率は，ベースTTLが300の時に比べ，ノード数が300の時に1\%弱上昇した．また、EpidemicRoutingはTTLが720に増加すると、ノード数が上昇するにつれて、到達率の低下が確認できたが、PMrouterではノード数の上昇による到達率の低下は確認できなかった。
+図\ref{ttl300deliveryprob}と下に示す図\ref{ttl720deliveryprob}から分かるように、データ到達率は，ベースTTLが300の時に比べ，
+どのノード数においても到達率の上昇が確認できた．また、EpidemicRoutingはTTLが720に増加すると、ノード数が上昇するにつれて、
+到達率の低下が確認できたが、PMrouterではノード数の上昇による到達率の低下は確認できなかった。
 
-%%図ttl300deliveryprob
+%%図ttl720deliveryprob
 
 \subsection{メッセージ平均遅延時間}
-図\ref{ttl300latencyavg}と下に示す図{ttl720latencyavg}から分かるように、メッセージ平均遅延時間は，3つのルーティング手法それぞれにおいて、TTL300の時と比べて、遅延時間は長くなる結果となった。一方で、ノード数が300の場合において、PMrouterとMaxPropを比較すると、遅延時間においてMaxPropよりも優れた結果を得られた。
+図\ref{ttl300latencyavg}と下に示す図\ref{ttl720latencyavg}から分かるように、
+メッセージ平均遅延時間は，3つのルーティング手法それぞれにおいて、TTL300の時と比べて、遅延時間は長くなる結果となった。
+一方で、ノード数が100、300の場合において、PMrouterが最も遅延時間が低くなった。
 
 %%図ttl720latencyavg
 
 \subsection{メッセージ削除数}
-図\ref{ttl300latencyavg}と下に示す図{ttl720latencyavg}から分かるように、TTL増加によるメッセージ削除数は大きく変わらなかった。一方で、EpidemicRoutingと比較すると、TTL300の時と同様に、PMrouterの方が多く削除されてしまっている。
+図\ref{ttl300dropped}と下に示す図\ref{ttl720dropped}から分かるように、TTL増加によるメッセージ削除数は大きく変わらなかった。一方で、EpidemicRoutingと比較すると、TTL300の時と同様に、PMrouterの方が多く削除されてしまっている。
 
-%%図{ttl720latencyavg}
+%%図{ttl720dropped}
 
 
 
 \section{過密度マップ TTL=300}
-TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl300deliveryprob}、表\ref{kamituTtl300latencyavg}、表\ref{kamituTtl300dropped}にそれぞれ示す。
+TTL300における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl300deliveryprob}、表\ref{kamituTtl300latencyavg}、表\ref{kamituTtl300dropped}にそれぞれ示す。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(過密度マップ TTL300)}
@@ -324,11 +347,11 @@ TTL300における、ノード数を100、300、500に設定したときの、�
 \hline
 &100&200&300\\
 \hline
-EpidemicRouting&&&\\
+EpidemicRouting&0.6854&0.6184&0.6179\\
 \hline
-MaxPropRouting&&&\\
+MaxPropRouting&0.974&0.9794&0.9836\\
 \hline
-PriorityMessageRouting&&&\\
+PriorityMessageRouting&0.8732&0.8579&\\
 \hline
       \end{tabular}
     \end{center}
@@ -340,13 +363,13 @@ PriorityMessageRouting&&&\\
       \label{kamituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
-&100&300&500\\
+&100&200&300\\
 \hline
-EpidemicRouting&&&\\
+EpidemicRouting&3848.7533&3538.5382&3494.9347\\
 \hline
-MaxPropRouting&&&\\
+MaxPropRouting&1268.0588&891.8756&806.9937\\
 \hline
-PriorityMessageRouting&&&\\
+PriorityMessageRouting&2465.137&2790.8036&2663.4296\\
 \hline
       \end{tabular}
     \end{center}
@@ -358,13 +381,13 @@ PriorityMessageRouting&&&\\
       \label{kamituTtl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
-&100&300&500\\
+&100&200&300\\
 \hline
-EpidemicRouting&&&\\
+EpidemicRouting&89119&265671&499754\\
 \hline
-MaxPropRouting&&&\\
+MaxPropRouting&re65218&re150311&re243119\\
 \hline
-PriorityMessageRouting&&&\\
+PriorityMessageRouting&87071&259599&488778\\
 \hline
       \end{tabular}
     \end{center}
@@ -377,41 +400,41 @@ PriorityMessageRouting&&&\\
 
 
 \section{過密度マップ TTL=720}
-TTL300における、ノード数を100、300、500に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl720deliveryprob}、表\ref{kamituTtl720latencyavg}、表\ref{kamituTtl720dropped}にそれぞれ示す。
+TTL720における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl720deliveryprob}、表\ref{kamituTtl720latencyavg}、表\ref{kamituTtl720dropped}にそれぞれ示す。
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(過密度マップ TTL720)}
       \label{kamituTtl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
-&100&300&500\\
+&100&200&300\\
 \hline
-EpidemicRouting&&&\\
+EpidemicRouting&0.5798&0.5216&0.5038\\
 \hline
-MaxPropRouting&&&\\
+MaxPropRouting&0.9726&0.9808&0.9843\\
 \hline
-PriorityMessageRouting&&&\\
+PriorityMessageRouting&0.8732&0.9073&\\
 \hline
       \end{tabular}
     \end{center}
 \end{table}
 
 \begin{table}[H]
- \begin{center}
+	\begin{center}
       \caption[]{メッセージ平均遅延時間(過密度マップ TTL720)}
       \label{kamituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
-\hline
-&100&300&500\\
-\hline
-EpidemicRouting&&&\\
-\hline
-MaxPropRouting&&&\\
-\hline
-PriorityMessageRouting&&&\\
-\hline
-      \end{tabular}
-    \end{center}
+				\hline
+				&100&200&300\\
+				\hline
+				EpidemicRouting&3608.918&3281.6612&3291.3509\\
+				\hline
+				MaxPropRouting&1262.1765&105.1085&802.9019\\
+				\hline
+				PriorityMessageRouting&2465.137&2152.6198&\\
+				\hline
+			\end{tabular}
+			\end{center}
 \end{table}
 
 \begin{table}[H]
@@ -422,11 +445,11 @@ PriorityMessageRouting&&&\\
 \hline
 &100&300&500\\
 \hline
-EpidemicRouting&&&\\
+EpidemicRouting&88977&267876&506915\\
 \hline
-MaxPropRouting&&&\\
+MaxPropRouting&re64749&re150357&re242869\\
 \hline
-PriorityMessageRouting&&&\\
+PriorityMessageRouting&87071&254976&\\
 \hline
       \end{tabular}
     \end{center}
