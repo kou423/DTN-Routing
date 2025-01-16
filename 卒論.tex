@@ -1,4 +1,3 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% 情報通信システム工学科 卒業論文テンプレート
@@ -89,7 +88,7 @@ DTNの研究として代表的な手法がEpidemic Routingであるが，網資�
 蓄積運搬形転送に基づく最も初期に提案された手法に，感染形中継転送方式であるEpidemic Routingと呼ばれる手法が存在する．メッセージを保持する端末が他の端末と接触をすることで通信を行い，複製メッセージを拡散させながら網内の末端までメッセージを届けることを可能にし，いずれかのメッセージが宛先端末に到達する．この手法は，網資源がある場合には，あらゆる方式の中で最も優れた遅延性能を示す[1]．
 
 しかし，問題点として，受信端末は複製メッセージをさらに複製するため，網資源を最も消費してしまう欠点がある．よって，拡散させることに重きを置いているため，効率の良いルーティングとは言い難い．Epidemic Routingのフローを図\ref{EpidemicRouting}に示す．
-%%図{EpidemicRouter}
+
 
 
 \subsection{Recovery Scheme（回復手法）}
@@ -183,12 +182,17 @@ PMRouterでは，始めにEpidemic Routingの環境を用意する．そこで�
 %%=============第４章=============
 \chapter{実験結果}
 
+%%=============デフォルトマップ_TTL300=============
 \section{疎密度マップ TTL=300}
-TTL300における、ノード数を100、200、300に設定したときの、
-「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、
-表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す。
-ここで、MaxPropの削除数については、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)だけでなく、
-MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録している。
+TTL300における，ノード数を100，200，300に設定したときの，「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{somituTtl300deliveryprob}、表\ref{somituTtl300latencyavg}、表\ref{somituTtl300dropped}にそれぞれ示す．ここで、MaxPropの削除数については、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)だけでなく，MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録している．
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL300/defaultmap_TTL300_toutaturitsu.png}
+\caption[]{\it{defaultmap\_TTL300\_データ到達率}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL300)}
@@ -207,6 +211,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6282\\
     \end{center}
 \end{table}
 
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL300/defaultmap_TTL300_tienzikan.png}
+\caption[]{\it{defaultmap\_TTL300\_メッセージ平均遅延時間}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ平均遅延時間(疎密度マップ TTL300)}
@@ -224,6 +235,13 @@ PriorityMessageRouting&11181.6049&5722.8538&7707.9552\\
       \end{tabular}
     \end{center}
 \end{table}
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL300/defaultmap_TTL300_sakuzyosuu.png}
+\caption[]{\it{defaultmap\_TTL720\_メッセージ削除数}}
+\end{figure}
 
 \begin{table}[H]
  \begin{center}
@@ -245,24 +263,29 @@ PriorityMessageRouting&8722&40988&93206\\
 \subsection{メッセージ到達率}
 図\ref{ttl300deliveryprob}に示すように、データ到達率は，適切な優先TTLを設定した上で比較を行うと，
 Epidemic Roitingより僅かに良い結果が得られた．
-また、ノード数が多くなるとEpidemic Routingとの差が大きくなった．
-一方で、MaxPropと比較すると、データ到達率は下回る結果となった。\\
+また，ノード数が多くなるとEpidemic Routingとの差が大きくなった．
+一方で、MaxPropと比較すると、データ到達率は下回る結果となった．\\
 %%図ttl300deliveryprob
 \subsection{メッセージ平均遅延時間}
-図\ref{ttl300latencyavg}に示すように、メッセージ平均遅延時間は，
-ノード数が200の場合において、平均遅延時間は最も小さくなった。また、どのノード数においてもEpidemicRoutingと比較した場合に
-良い結果が得られた。
-一方で、MaxPropと比較すると、データ到達率は下回る結果となった。\\
+図\ref{ttl300latencyavg}に示すように，メッセージ平均遅延時間は，ノード数が200の場合において，平均遅延時間は最も小さくなった．また、どのノード数においてもEpidemicRoutingと比較した場合に良い結果が得られた．一方で，MaxPropと比較すると、データ到達率は下回る結果となった．\\
 %%図ttl300latencyavg
 
 \subsection{メッセージ削除数}
-図\ref{ttl300dropped}に示すように、ノード数が上がるごとにメッセージ削除数が上がり、EpidemicRoutingよりもわずかに高い削除数となった、ここでメッセージの削除数とは、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)となっており、PMrouterはTTLの制御によってメッセージの削除を行っている。
-また、MaxPropはバッファ溢れが起きる際、TTLに関わらず、優先度の低いメッセージを削除(removed)し、新しいメッセージを取得するという手法によって、
-バッファ溢れを防いでいるため、ここでのメッセージ削除数は限りなく小さく、代わりに設定条件下での意図的なメッセージ削除数が多くなっている。\\
+図\ref{ttl300dropped}に示すように，ノード数が上がるごとにメッセージ削除数が上がり，EpidemicRoutingよりもわずかに高い削除数となった，ここでメッセージの削除数とは、TTLによるタイムアウトやバッファ溢れなどによるメッセージの削除(dropped)となっており，PMrouterはTTLの制御によってメッセージの削除を行っている．
+また，MaxPropはバッファ溢れが起きる際，TTLに関わらず，優先度の低いメッセージを削除(removed)し，新しいメッセージを取得するという手法によって，バッファ溢れを防いでいるため，ここでのメッセージ削除数は限りなく小さく，代わりに設定条件下での意図的なメッセージ削除数が多くなっている．\\
 %%図ttl300dropped
 
+%%=============デフォルトマップ_TTL720=============
 \section{疎密度マップ TTL=720}
-TTLを720における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{somituTtl720deliveryprob}、表\ref{somituTtl720latencyavg}、表\ref{somituTtl720dropped}にそれぞれ示す。
+TTLを720における，ノード数を100，200，300に設定したときの，「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{somituTtl720deliveryprob}，表\ref{somituTtl720latencyavg}，表\ref{somituTtl720dropped}にそれぞれ示す．
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL720/defaultmap_TTL720_toutaturitsu.png}
+\caption[]{\it{defaultmap\_TTL720\_データ到達率}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(疎密度マップ TTL720)}
@@ -280,6 +303,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6377\\
       \end{tabular}
     \end{center}
 \end{table}
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL720/defaultmap_TTL720_tienzikan.png}
+\caption[]{\it{defaultmap\_TTL720\_メッセージ平均遅延時間}}
+\end{figure}
 
 \begin{table}[H]
  \begin{center}
@@ -299,6 +329,13 @@ PriorityMessageRouting&11181.6049&9160.6067&8219.5436\\
     \end{center}
 \end{table}
 
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/default_TTL720/defaultmap_TTL720_sakuzyosuu.png}
+\caption[]{\it{defaultmap\_TTL720\_メッセージ削除数}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ削除数(疎密度マップ TTL720)}
@@ -317,28 +354,31 @@ PriorityMessageRouting&8722&39950&92100\\
     \end{center}
 \end{table}
 \subsection{メッセージ到達率}
-図\ref{ttl300deliveryprob}と下に示す図\ref{ttl720deliveryprob}から分かるように、データ到達率は，ベースTTLが300の時に比べ，
-どのノード数においても到達率の上昇が確認できた．また、EpidemicRoutingはTTLが720に増加すると、ノード数が上昇するにつれて、
-到達率の低下が確認できたが、PMrouterではノード数の上昇による到達率の低下は確認できなかった。
+図\ref{ttl300deliveryprob}と下に示す図\ref{ttl720deliveryprob}から分かるように，データ到達率は，ベースTTLが300の時に比べ，どのノード数においても到達率の上昇が確認できた．また，EpidemicRoutingはTTLが720に増加すると，ノード数が上昇するにつれて，到達率の低下が確認できたが、PMrouterではノード数の上昇による到達率の低下は確認できなかった．
 
 %%図ttl720deliveryprob
 
 \subsection{メッセージ平均遅延時間}
-図\ref{ttl300latencyavg}と下に示す図\ref{ttl720latencyavg}から分かるように、
-メッセージ平均遅延時間は，3つのルーティング手法それぞれにおいて、TTL300の時と比べて、遅延時間は長くなる結果となった。
-一方で、ノード数が100、300の場合において、PMrouterが最も遅延時間が低くなった。
+図\ref{ttl300latencyavg}と下に示す図\ref{ttl720latencyavg}から分かるように，メッセージ平均遅延時間は，3つのルーティング手法それぞれにおいて，TTL300の時と比べて，遅延時間は長くなる結果となった．一方で，ノード数が100，300の場合において，PMrouterが最も遅延時間が低くなった．
 
 %%図ttl720latencyavg
 
 \subsection{メッセージ削除数}
-図\ref{ttl300dropped}と下に示す図\ref{ttl720dropped}から分かるように、TTL増加によるメッセージ削除数は大きく変わらなかった。一方で、EpidemicRoutingと比較すると、TTL300の時と同様に、PMrouterの方が多く削除されてしまっている。
+図\ref{ttl300dropped}と下に示す図\ref{ttl720dropped}から分かるように，TTL増加によるメッセージ削除数は大きく変わらなかった．一方で，EpidemicRoutingと比較すると，TTL300の時と同様に，PMrouterの方が多く削除されてしまっている．
 
 %%図{ttl720dropped}
 
-
-
+%%=============スターマップ_TTL300=============
 \section{過密度マップ TTL=300}
-TTL300における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl300deliveryprob}、表\ref{kamituTtl300latencyavg}、表\ref{kamituTtl300dropped}にそれぞれ示す。
+TTL300における，ノード数を100，200，300に設定したときの，「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{kamituTtl300deliveryprob}，表\ref{kamituTtl300latencyavg}，表\ref{kamituTtl300dropped}にそれぞれ示す．
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL300/starmap_TTL300_toutaturitsu.png}
+\caption[]{\it{starmap\_TTL300\_データ到達率}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(過密度マップ TTL300)}
@@ -357,6 +397,13 @@ PriorityMessageRouting&0.8732&0.8579&\\
     \end{center}
 \end{table}
 
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL300/starmap_TTL300_tienzikan.png}
+\caption[]{\it{starmap\_TTL300\_メッセージ平均遅延時間}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ平均遅延時間(過密度マップ TTL300)}
@@ -374,6 +421,13 @@ PriorityMessageRouting&2465.137&2790.8036&2663.4296\\
       \end{tabular}
     \end{center}
 \end{table}
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL300/starmap_TTL300_sakuzyosuu.png}
+\caption[]{\it{starmap\_TTL300\_メッセージ削除数}}
+\end{figure}
 
 \begin{table}[H]
  \begin{center}
@@ -398,9 +452,17 @@ PriorityMessageRouting&87071&259599&488778\\
 メッセージ平均遅延時間は，ノード数が100から，300，500と多くなるにつれて減少した．
 \subsection{メッセージ削除数}
 
-
+%%=============スターマップ_TTL720=============
 \section{過密度マップ TTL=720}
-TTL720における、ノード数を100、200、300に設定したときの、「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を、表\ref{kamituTtl720deliveryprob}、表\ref{kamituTtl720latencyavg}、表\ref{kamituTtl720dropped}にそれぞれ示す。
+TTL720における，ノード数を100，200，300に設定したときの，「メッセージ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{kamituTtl720deliveryprob}，表\ref{kamituTtl720latencyavg}，表\ref{kamituTtl720dropped}にそれぞれ示す．
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL720/starmap_TTL720_toutaturitsu.png}
+\caption[]{\it{starmap\_TTL720\_データ到達率}}
+\end{figure}
+
 \begin{table}[H]
  \begin{center}
       \caption[]{メッセージ到達率(過密度マップ TTL720)}
@@ -419,6 +481,13 @@ PriorityMessageRouting&0.8732&0.9073&\\
     \end{center}
 \end{table}
 
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL720/starmap_TTL720_tienzikan.png}
+\caption[]{\it{starmap\_TTL720\_メッセージ平均遅延時間}}
+\end{figure}
+
 \begin{table}[H]
 	\begin{center}
       \caption[]{メッセージ平均遅延時間(過密度マップ TTL720)}
@@ -436,6 +505,13 @@ PriorityMessageRouting&0.8732&0.9073&\\
 			\end{tabular}
 			\end{center}
 \end{table}
+
+%%==============================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=100mm]{figures/star_TTL720/starmap_TTL720_sakuzyosuu.png}
+\caption[]{\it{starmap\_TTL720\_メッセージ削除数}}
+\end{figure}
 
 \begin{table}[H]
  \begin{center}
@@ -496,8 +572,8 @@ PriorityMessageRouting&87071&254976&\\
 \renewcommand{\headrulewidth}{0.3truemm}
 \appendix
 \chapter{マップについて}
-今回の実験では、シミュレータに搭載されていたヘルシンキのマップに加えて、自作の完全グラフのマップでの実験を行った．研究開始当初は参考文献に倣い、他の実在するマップでの実験を行う予定であったが、マップ導入時の問題を解決することができなかったため、断念した．\\\\
-ここでは、マップの導入に関して行った手順について記す．
+今回の実験では，シミュレータに搭載されていたヘルシンキのマップに加えて，自作の完全グラフのマップでの実験を行った．研究開始当初は参考文献に倣い，他の実在するマップでの実験を行う予定であったが，マップ導入時の問題を解決することができなかったため、断念した．\\\\
+ここでは，マップの導入に関して行った手順について記す．
 %ここは「付録章」である．\textsf{\yen appendix}以降に，\textsf{\yen chapter\{見出し文字列\}}と書けば，
 %「付録章見出し」が設定される．
 %「章見出し」と同じ文字サイズ，同じ上下余白である．
@@ -512,7 +588,7 @@ PriorityMessageRouting&87071&254976&\\
 %「小小節見出し」と同じ文字サイズ，同じ上下余白である．
 osm ファイルとは，オープンストリートマップという自由に利用でき，共同編集機能のある世界地図を作成する共同作業プロジェクト(参考文献OSM)にてエクスポートすることができるファイル形式である．osmファイルの状態では，TheONEシミュレータで用いることができない．
 \subsection{wktファイル}
-wktファイルとは、地理情報をテキスト形式で表現するファイル形式である．TheONEシミュレータで読み込めるマップの形式はwktファイルのみであるため、osmファイルは何らかの形でwktファイルに変更する必要がある．
+wktファイルとは、地理情報をテキスト形式で表現するファイル形式である．TheONEシミュレータで読み込めるマップの形式はwktファイルのみであるため，osmファイルは何らかの形でwktファイルに変更する必要がある．
 \section{osmファイルとwktファイル}
 
 \subsection{OpenJUMPを用いたosmファイルからwktファイルへの変換}
