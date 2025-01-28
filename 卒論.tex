@@ -21,7 +21,7 @@
 %% 表紙の記載事項
 %%----------------------------------------------------------------------------------------------------------------------
 %% ToDo: 論文タイトル
-\title{DTNを用いた効率的メッセージ交換に関する研究}
+\title{DTNを用いた効率的メッセージ\\交換に関する研究}
 %% ToDo: 著者一覧
 \authorA{21A5041}{記内　勇太}
 \authorB{21A5101}{古山　孔亮}
@@ -64,11 +64,10 @@
 %%======================================================================================================================
 
 %%=============第１章=============
-\chapter{まえがき}
-\section{研究背景}
+\chapter{序論}
 近年，インターネットは，情報交換・共有システムとして，社会・経済のインフラストラクチャの役割を担っている．しかし，全ての地域に高度な通信サービスを提供することは，コストが掛かる上に周波数の有限性から現実的ではない．また，ディジタルデバイド地域のインフラ構築や災害時などで本来の通信インフラの機能や性能が低下・停止した場合を考え，場所・時間を問わず利用できる情報サービスの実現が必要とされている．
 
-そこで，従来では想定されていなかった環境を含むエンドツーエンドの情報伝達において，従来のTCP/IP（Transmission Control Protocol/Internet Protocol）技術を拡張し，中継ノード及びエンドノードの機能を再設計する必要がある．昔から車や人などが物理的に情報を運ぶやり方は存在していた．それらをTCP/IP技術の問題認識から発生した技術領域としてインターネット通信の枠組みで考えられたのが，DTNである．
+そこで，従来では想定されていなかった環境を含むエンドツーエンドの情報伝達において，従来のTCP/IP（Transmission Control Protocol/Internet Protocol）技術を拡張し，中継ノード及びエンドノードの機能を再設計する必要がある．昔から車や人などが物理的に情報を運ぶやり方は存在していた．それらをTCP/IP技術の問題認識から発生した技術領域としてインターネット通信の枠組みで考えられたのが，DTNである．[1]
 
 TCP/IP技術におけるDTNの概念はビントン・サーフ氏によって提案され，惑星間インターネットの構築が基になっている．その惑星間インターネットには2つの大きな問題点が挙げられる．まず，惑星間というのは光速で進む電波であっても，届くのに長い時間を要する．次に，通信機が惑星によって見えなくなり，その間，通信が途絶える．これらの問題をそれぞれ，「通信遅延」，「通信途絶」として研究されてきた[2]．
 
@@ -220,14 +219,14 @@ TTL300における，ノード数を100，200，300に設定したときの，�
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL300/defaultmap_TTL300_toutaturitsu.png}
+\includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_toutaturitu.png}
 \caption[]{\it{データ到達率(疎密度マップ TTL300)}}
 \label{somituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{データ到達率(疎密度マップ TTL300)}
+      \caption[]{\it{データ到達率(疎密度マップ TTL300)}}
       \label{somituTtl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -248,14 +247,14 @@ PriorityMessageRouting&0.3948&0.5347&0.6282\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL300/defaultmap_TTL300_tienzikan.png}
+\includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_tienjikan.png}
 \caption[]{\it{メッセージ平均遅延時間(疎密度マップ TTL300)}}
 \label{somituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ平均遅延時間(疎密度マップ TTL300)}
+      \caption[]{\it{メッセージ平均遅延時間(疎密度マップ TTL300)}}
       \label{somituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -274,14 +273,14 @@ PriorityMessageRouting&11181.6049&5722.8538&7707.9552\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL300/defaultmap_TTL300_sakuzyosuu.png}
+\includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_sakuzyosu.png}
 \caption[]{\it{メッセージ削除数(疎密度マップ TTL300)}}
 \label{somituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ削除数(疎密度マップ TTL300)}
+      \caption[]{\it{メッセージ削除数(疎密度マップ TTL300)}}
       \label{somituTtl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -317,14 +316,14 @@ TTL720における，ノード数を100，200，300に設定したときの，�
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL720/defaultmap_TTL720_toutaturitsu.png}
+\includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_toutaturitu.png}
 \caption[]{\it{データ到達率(疎密度マップ TTL720)}}
 \label{somituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{データ到達率(疎密度マップ TTL720)}
+      \caption[]{\it{データ到達率(疎密度マップ TTL720)}}
       \label{somituTtl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -345,14 +344,14 @@ PriorityMessageRouting&0.3948&0.5347&0.6377\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL720/defaultmap_TTL720_tienzikan.png}
+\includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_tienjikan.png}
 \caption[]{\it{メッセージ平均遅延時間(疎密度マップ TTL720)}}
 \label{somituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ平均遅延時間(疎密度マップ TTL720)}
+      \caption[]{\it{メッセージ平均遅延時間(疎密度マップ TTL720)}}
       \label{somituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -371,14 +370,14 @@ PriorityMessageRouting&11181.6049&9160.6067&8219.5436\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/default_TTL720/defaultmap_TTL720_sakuzyosuu.png}
+\includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_sakuzyosu.png}
 \caption[]{\it{メッセージ削除数(疎密度マップ TTL720)}}
 \label{somituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ削除数(疎密度マップ TTL720)}
+      \caption[]{\it{メッセージ削除数(疎密度マップ TTL720)}}
       \label{somituTtl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -412,14 +411,14 @@ TTL300における，ノード数を100，200，300に設定したときの，�
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL300/starmap_TTL300_toutaturitsu.png}
+\includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_toutaturitu.png}
 \caption[]{\it{データ到達率(過密度マップ TTL300)}}
 \label{kamituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{データ到達率(過密度マップ TTL300)}
+      \caption[]{\it{データ到達率(過密度マップ TTL300)}}
       \label{kamituttl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -440,14 +439,14 @@ PriorityMessageRouting&0.8732&0.9176&0.907\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL300/starmap_TTL300_tienzikan.png}
+\includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_tienjikan.png}
 \caption[]{\it{メッセージ平均遅延時間(過密度マップ TTL300)}}
 \label{kamituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ平均遅延時間(過密度マップ TTL300)}
+      \caption[]{\it{メッセージ平均遅延時間(過密度マップ TTL300)}}
       \label{kamituttl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -466,14 +465,14 @@ PriorityMessageRouting&2465.137&2156.8358&2158.276\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL300/starmap_TTL300_sakuzyosuu.png}
+\includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_sakuzyosu.png}
 \caption[]{\it{メッセージ削除数(過密度マップ TTL300)}}
 \label{kamituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ削除数(過密度マップ TTL300)}
+      \caption[]{\it{メッセージ削除数(過密度マップ TTL300)}}
       \label{kamituttl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -507,14 +506,14 @@ TTL720における，ノード数を100，200，300に設定したときの，�
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL720/starmap_TTL720_toutaturitsu.png}
+\includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_toutaturitu.png}
 \caption[]{\it{データ到達率(過密度マップ TTL720)}}
 \label{kamituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{データ到達率(過密度マップ TTL720)}
+      \caption[]{\it{データ到達率(過密度マップ TTL720)}}
       \label{kamituttl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -535,14 +534,14 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL720/starmap_TTL720_tienzikan.png}
+\includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_tienjikan.png}
 \caption[]{\it{メッセージ平均遅延時間(過密度マップ TTL720)}}
 \label{kamituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
 	\begin{center}
-      \caption[]{メッセージ平均遅延時間(過密度マップ TTL720)}
+      \caption[]{\it{メッセージ平均遅延時間(過密度マップ TTL720)}}
       \label{kamituttl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 				\hline
@@ -561,14 +560,14 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 %%==============================================
 \begin{figure}[h]
 \centering
-\includegraphics[width=80mm]{figures/star_TTL720/starmap_TTL720_sakuzyosuu.png}
+\includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_sakuzyosu.png}
 \caption[]{\it{メッセージ削除数(過密度マップ TTL720)}}
 \label{kamituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{メッセージ削除数(過密度マップ TTL720)}
+      \caption[]{\it{メッセージ削除数(過密度マップ TTL720)}}
       \label{kamituttl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
