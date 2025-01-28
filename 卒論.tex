@@ -1,3 +1,4 @@
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% 情報通信システム工学科 卒業論文テンプレート
@@ -342,13 +343,14 @@ PriorityMessageRouting&8722&40988&93206\\
 図\ref{somituttl300droppedgraph}に示すように，ノード数が上がるごとにメッセージ削除数が上がり，EpidemicRoutingよりもわずかに高い削除数となった，ここでメッセージの削除数とは，ベースTTL及び優先TTLによるタイムアウトやバッファ溢れ等によるメッセージの削除(dropped)となっており，PMRoutingは優先TTLの制御によってメッセージの削除を行っている．また，MaxPropはバッファ溢れが起きる際，ベースTTLに関わらず，優先度の低いメッセージを削除(removed)し，新しいメッセージを取得するという手法によって，バッファ溢れを防いでいるため，ここでのメッセージ削除数は限りなく小さく，代わりに設定条件下での意図的なメッセージ削除数が多くなっている．\\
 %%図ttl300dropped
 \subsection{疎密度マップ，ベースTTL300における優先TTL}
+表\ref{priorityTTL_somitsu300}に示すように，ノード数が100の場合を除き，優先TTLはベースTTLよりも低い値に設定することでより効果が得られた．
 \begin{table}[H]
 	\begin{center}
 			 \caption[]{\it{優先TTL(疎密度マップ ベースTTL300)}}
 			 \label{priorityTTL_somitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL\\
+ ノード数&優先TTL[\it{min}]\\
  \hline
  100&410\\
  \hline
@@ -455,19 +457,20 @@ PriorityMessageRouting&8722&39950&92100\\
 図\ref{somituttl720droppedgraph}に示すように，メッセージ削除数では，ノード数が多くなるに連れて削除数が多くなった．これは，ノードが増える度に複製メッセージが量産され，1ノードあたりのバッファ溢れ及び優先TTLによるメッセージの削除が多くなったからだと考える．
 
 \subsection{疎密度マップ，ベースTTL720における優先TTL}
+図\ref{priorityTTL_somitsu720}に示すように，TTL300における優先TTLと同様の結果が得られた．
 \begin{table}[H]
 	\begin{center}
 			 \caption[]{\it{優先TTL(疎密度マップ ベースTTL720)}}
-			 \label{priorityTTL_somitsu300}
+			 \label{priorityTTL_somitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL\\
+ ノード数&優先TTL[\it{min}]\\
  \hline
  100&410\\
  \hline
  200&290\\
  \hline
- 300&230\\
+ 300&260\\
  \hline
 			 \end{tabular}
 		 \end{center}
@@ -567,19 +570,20 @@ PriorityMessageRouting&87071&252813&482528\\
 図\ref{kamituttl300droppedgraph}に示すように，メッセージ削除数では，デフォルトマップよりも約5から8倍遅延していた．この結果においても，原因は過密によるノードの接触により複製メッセージが量産され，バッファ溢れ及び優先TTLによるメッセージの削除が多くなったからだと考える．
 
 \subsection{過密度マップ，ベースTTL300における優先TTL}
+図\ref{priorityTTL_kamitsu300}に示すように，先程までの疎密度マップと比較すると，優先TTLはより低い値で効果が得られた．過密度マップは接触と複製メッセージの増加により，バッファ内のメッセージがあふれやすい環境などで効果が得られやすいのではないかと考える．
 \begin{table}[H]
 	\begin{center}
 			 \caption[]{\it{優先TTL(過密度マップ ベースTTL300)}}
-			 \label{priorityTTL_somitsu300}
+			 \label{priorityTTL_kamitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL\\
+ ノード数&優先TTL[\it{min}]\\
  \hline
- 100&410\\
+ 100&90\\
  \hline
- 200&290\\
+ 200&80\\
  \hline
- 300&230\\
+ 300&80\\
  \hline
 			 \end{tabular}
 		 \end{center}
@@ -679,19 +683,20 @@ PriorityMessageRouting&87071&254976&485834\\
 図\ref{kamituttl720droppedgraph}に示すように，PMRoutingとEpidemicRoutingのメッセージ削除数を比較すると，PMRoutingのメッセージ削除数の方が，僅かに小さくなった．マップが過密であるが故に，ノードのリストの更新が高い頻度で行われたことにより，メッセージの優先度更新も同様の頻度で行われ，その結果，保持状態になっているメッセージが多く出てきたことで，EpidemicRoutingよりも削除数が少なくなったのではないかと考える．また，ベースTTL300と比較した場合において，結果には大きな違いはなかったため，この過密マップにおいては他の条件でも同様の結果が得られるのではないかと考える．
 
 \subsection{過密度マップ，ベースTTL720における優先TTL}
+図\ref{priorityTTL_kamitsu720}に示すように，TTL300と同様に，疎密度マップよりも低い優先度で効果が得られた．
 \begin{table}[H]
 	\begin{center}
 			 \caption[]{\it{優先TTL(過密度マップ TTL720)}}
-			 \label{priorityTTL_somitsu300}
+			 \label{priorityTTL_kamitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL\\
+ ノード数&優先TTL[\it{min}]\\
  \hline
- 100&410\\
+ 100&90\\
  \hline
- 200&290\\
+ 200&80\\
  \hline
- 300&230\\
+ 300&80\\
  \hline
 			 \end{tabular}
 		 \end{center}
@@ -707,7 +712,7 @@ Epidemic Routingと比較評価を行った結果，以下のような結論が�
  \begin{itemize}
   \item ノード数が増加するに連れて，複製メッセージも増加するため，網内のメッセージを効率的に削除しなければならない．
   \item 各マップにおいて，データ到達率及びメッセージ遅延時間の結果に反し，メッセージ削除数が増加するといったトレードオフの関係性を確認できた．
-  \item 当初の予想と反し，優先TTLが短いほどデータ到達率が向上した．
+  \item バッファ内のメッセージがあふれやすい環境などで，優先TTLが短いほどデータ到達率が向上した．
   \item データ到達率について，従来のEpidemic Routingよりも大きい結果となり，MaxPropの到達率には届かない結果となった．
  \end{itemize}
 \end{quote}
