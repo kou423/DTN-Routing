@@ -124,8 +124,17 @@ Spray And Waitは，メッセージ毎に複製回数が静的に設定され，
 	\label{SprayAndWait}
 \end{figure}
 
+\newpage
+
 \subsection{Max Prop}
-Max Propは，各ノードが保持しているメッセージに優先度を付け，他ノードと接触時に優先度の高いメッセージから順に複製メッセージを送信し，バッファの容量が不足した時に優先度の低いメッセージから順に破棄する手法である[7]．
+Max Propは，各ノードが保持しているメッセージに優先度を付け，他ノードと接触時に優先度の高いメッセージから順に複製メッセージを送信し，バッファの容量が不足した時に優先度の低いメッセージから順に破棄する手法である[7]．MaxPropのフローを\ref{MaxProp}に示す．
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=100mm]{figures/Routing_method/MaxProp_method.png}
+	\caption[]{\it{MaxProp}}
+	\label{MaxProp}
+\end{figure}
 
 %%=============第３章=============
 \chapter{提案手法}
