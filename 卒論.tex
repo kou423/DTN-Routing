@@ -811,13 +811,14 @@ wktファイルとは，地理情報をテキスト形式で表現するファ�
 \newpage
 
 %%=============プログラム=============
-\section{プログラム}
+\chapter{プログラム}
 \lstset{
     frame=single,
     numbers=left,
     tabsize=2
 }
-\subsection{PriorityMessageRouter.java}
+\section{PriorityMessageRouter.java}
+TheONEシミュレータにて，実際に導入したPMroutingのソースコードを以下に示す．
 \begin{framed}
 \begin{verbatim}
 package routing;
@@ -973,7 +974,8 @@ public class PriorityMessageRouter extends ActiveRouter {
 \end{verbatim}
 \end{framed}
 
-\subsection{セッティング（default\_map及びstar\_map）}
+\section{セッティング（default\_map及びstar\_map）}
+TheONEシミュレータを動作させるうえで，シミュレーション条件などを設定するテキストファイルの内容を以下に示す．
 \begin{framed}
 \begin{verbatim}
 #
@@ -1135,7 +1137,8 @@ GUI.EventLogPanel.nrofEvents = 100
 \end{verbatim}
 \end{framed}
 
-\subsection{ActiveRouter.java}
+\section{ActiveRouter.java}
+各ルーティング手法のファイルのスーパークラスである，ActiveRouterをPMroutingに合わせて一部変更したものについて，以下に示す．
 \begin{framed}
 \begin{verbatim}
 /* 
