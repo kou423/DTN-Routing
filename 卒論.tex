@@ -189,7 +189,11 @@ PMRoutingでは，始めにEpidemic Routingの環境を用意する．そこで�
 %%=============第４章=============
 \chapter{評価}
 \section{評価方法}
-計算機シミュレーションにより，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」を評価尺度として提案方式の性能を検証する．また，従来手法（Epidemic Routing及びMax Prop）と提案手法の性能を比較し，提案手法の実用性を検証する．従来研究における最も効率的な手法であるMax Propを比較対象とすることで，提案手法がどの程度の実用性があるのかを把握する．マップ形状は，疎密状態であるdefault\_map及び過密状態であるstar\_mapである．
+計算機シミュレーションにより，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」を評価尺度として提案方式の
+性能を検証する．また，従来手法（Epidemic Routing及びMax Prop）と提案手法の性能を比較し，提案手法の実用性を検証する．
+従来研究における最も効率的な手法であるMax Propを比較対象とすることで，提案手法がどの程度の実用性があるのかを把握する．
+また，シミュレーションに使用するマップ形状は，シミュレータ内でデフォルトで導入されているdefault\_mapを疎状態のマップ，
+自作のstar\_mapを密状態のマップとし，シミュレーションを行う．
 
 \section{実験環境}
 本研究では，The ONEシミュレータ（The Opportunistic Network Environment Simulator）[5]を用いて実験を行う．The ONEシミュレータは，DTNの評価実験をするために作成されたフリーのネットワークシミュレータである．任意のルーティングやモビリティパターンを導入することができる．時間の遷移方式はタイムステップ型であり，標準では0.1秒毎に遷移する．また，通信可能距離と通信速度のみを考慮し，パケットのロスト，建物，電波干渉等による通信範囲の削減，保有メッセージの把握等の細かい部分は考慮していない[5]．このシミュレータではバンドル層以上のみでシミュレーションを行っているため，トランスポート層以下に関わる電波の輻輳や衝突等については，パラメータで妥当な値を設定しなければならない[9]．
@@ -259,20 +263,20 @@ PMRoutingでは，始めにEpidemic Routingの環境を用意する．そこで�
 \chapter{実験結果}
 
 %%=============デフォルトマップ_TTL300=============
-\section{疎密状態マップ TTL=300}
+\section{疎状態マップ TTL=300}
 ベースTTL300における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{somituTtl300deliveryprob}，表\ref{somituTtl300latencyavg}，表\ref{somituTtl300dropped}にそれぞれ示す．ここで，MaxPropの削除数については，ベースTTLによるタイムアウトやバッファ溢れ等によるメッセージの削除(dropped)だけでなく，MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録している．
 
 %%==============================================
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_toutaturitu.png}
-\caption[]{\it{データ到達率(疎密状態マップ TTL300)}}
+\caption[]{\it{データ到達率(疎状態マップ TTL300)}}
 \label{somituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(疎密状態マップ TTL300)}}
+      \caption[]{\it{データ到達率(疎状態マップ TTL300)}}
       \label{somituTtl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -294,13 +298,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6282\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(疎密状態マップ TTL300)}}
+\caption[]{\it{メッセージ平均遅延時間(疎状態マップ TTL300)}}
 \label{somituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(疎密状態マップ TTL300)}}
+      \caption[]{\it{メッセージ平均遅延時間(疎状態マップ TTL300)}}
       \label{somituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -320,13 +324,13 @@ PriorityMessageRouting&11181.6049&5722.8538&7707.9552\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(疎密状態マップ TTL300)}}
+\caption[]{\it{メッセージ削除数(疎状態マップ TTL300)}}
 \label{somituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(疎密状態マップ TTL300)}}
+      \caption[]{\it{メッセージ削除数(疎状態マップ TTL300)}}
       \label{somituTtl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -346,17 +350,17 @@ PriorityMessageRouting&8722&40988&93206\\
 図\ref{somituttl300deliveryprobgraph}に示すように，データ到達率は，適切な優先TTLを設定した上で比較を行うと，PMRoutingのデータ到達率はEpidemic Roitingより僅かに良い結果が得られた．これは，優先度の高いメッセージの削除を防ぎ，宛先に届く可能性の高いメッセージを保持し続けることができていたためであると考える．一方で，MaxPropと比較すると，データ到達率は下回る結果となった．\\
 %%図ttl300deliveryprob
 \subsection{メッセージ平均遅延時間}
-図\ref{somituttl300latencyavggraph}に示すように，メッセージ平均遅延時間は，ノード数が200の場合において，PMRoutingの平均遅延時間は最も小さくなった．また，どのノード数においてもEpidemicRoutingと比較した場合に良い結果が得られた．これは，到達率と同様に，EpidemicRoutingの場合は，届く可能性のあるメッセージをTTLによるタイムアウトや，バッファ溢れ等により失ってしまっているが，PMRoutingでは優先メッセージを保持し，網内に流布しやすい状態にあるため，結果として遅延時間がEpidemicRoutingよりも改善されたと考える．一方で，MaxPropと比較すると，メッセージ平均遅延時間は下回る結果となった．\\
+図\ref{somituttl300latencyavggraph}に示すように，メッセージ平均遅延時間は，ノード数が200の場合において，PMRoutingの平均遅延時間は最も小さくなった．また，どのノード数200と300の場合においてEpidemicRoutingと比較した場合に良い結果が得られた．これは，到達率と同様に，EpidemicRoutingの場合は，届く可能性のあるメッセージをTTLによるタイムアウトや，バッファ溢れ等により失ってしまっているが，PMRoutingでは優先メッセージを保持し，網内に流布しやすい状態にあるため，結果として遅延時間がEpidemicRoutingよりも改善されたと考える．一方で，MaxPropと比較すると，メッセージ平均遅延時間は下回る結果となった．\\
 %%図ttl300latencyavg
 
 \subsection{メッセージ削除数}
 図\ref{somituttl300droppedgraph}に示すように，ノード数が上がるごとにメッセージ削除数が上がり，EpidemicRoutingよりもわずかに高い削除数となった，ここでメッセージの削除数とは，ベースTTL及び優先TTLによるタイムアウトやバッファ溢れ等によるメッセージの削除(dropped)となっており，PMRoutingは優先TTLの制御によってメッセージの削除を行っている．また，MaxPropはバッファ溢れが起きる際，ベースTTLに関わらず，優先度の低いメッセージを削除(removed)し，新しいメッセージを取得するという手法によって，バッファ溢れを防いでいるため，ここでのメッセージ削除数は限りなく小さく，代わりに設定条件下での意図的なメッセージ削除数が多くなっている．\\
 %%図ttl300dropped
-\subsection{疎密状態マップ，ベースTTL300における優先TTL}
+\subsection{疎状態マップ，ベースTTL300における優先TTL}
 表\ref{priorityTTL_somitsu300}に示すように，ノード数が100の場合を除き，優先TTLはベースTTLよりも低い値に設定することでより効果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(疎密状態マップ ベースTTL300)}}
+			 \caption[]{\it{優先TTL(疎状態マップ ベースTTL300)}}
 			 \label{priorityTTL_somitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
@@ -374,20 +378,20 @@ PriorityMessageRouting&8722&40988&93206\\
 \newpage
 
 %%=============デフォルトマップ_TTL720=============
-\section{疎密状態マップ ベースTTL=720}
+\section{疎状態マップ ベースTTL=720}
 ベースTTL720における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{somituTtl720deliveryprob}，表\ref{somituTtl720latencyavg}，表\ref{somituTtl720dropped}にそれぞれ示す．
 
 %%==============================================
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_toutaturitu.png}
-\caption[]{\it{データ到達率(疎密状態マップ ベースTTL720)}}
+\caption[]{\it{データ到達率(疎状態マップ ベースTTL720)}}
 \label{somituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(疎密状態マップ ベースTTL720)}}
+      \caption[]{\it{データ到達率(疎状態マップ ベースTTL720)}}
       \label{somituTtl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -409,13 +413,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6377\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(疎密状態マップ ベースTTL720)}}
+\caption[]{\it{メッセージ平均遅延時間(疎状態マップ ベースTTL720)}}
 \label{somituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(疎密状態マップ ベースTTL720)}}
+      \caption[]{\it{メッセージ平均遅延時間(疎状態マップ ベースTTL720)}}
       \label{somituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -435,13 +439,13 @@ PriorityMessageRouting&11181.6049&9160.6067&8219.5436\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(疎密状態マップ ベースTTL720)}}
+\caption[]{\it{メッセージ削除数(疎状態マップ ベースTTL720)}}
 \label{somituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(疎密状態マップ ベースTTL720)}}
+      \caption[]{\it{メッセージ削除数(疎状態マップ ベースTTL720)}}
       \label{somituTtl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -458,7 +462,9 @@ PriorityMessageRouting&8722&39950&92100\\
 \end{table}
 
 \subsection{データ到達率}
-図\ref{somituttl720deliveryprobgraph}に示すように，ベースTTL720における疎密状態マップでは，データ到達率はノード数が増えるに連れて，Epidemic Routingとの差が広がった．これは，メッセージ有効時間であるTTLが長くなったことに加え，宛先に届けることのできるメッセージが多くなったからであると考えられる．また，優先TTLにより一部メッセージがPM Routingによって削除されることで，網内のメッセージ数が削減されたことが起因していると考えられる．結果的に網内のメッセージ数が本来の数より減少し，優先度の高いメッセージが早く削除されることによって，効率よくメッセージが網内を循環していると考えた．しかし，理論上は優先度の向上するメッセージが，優先TTLによる干渉を受ける前に到達しているか，また，優先度が向上した後，優先TTLの時間内で宛先ノードに到達している必要がある．特に，ベースTTLが720の場合，シミュレーション時間と同等の有効時間になるため，メッセージの削除条件がベースTTLによるタイムアウトではなく，バッファ溢れ及び優先TTLのみになってしまう．これらから，ベースTTLが720の場合には，優先TTLの値が小さければ小さいほど優先度の低いメッセージが網内に取り残され，バッファに空きがある限りは到達する可能性の低いメッセージが網内を循環することになる．
+図\ref{somituttl720deliveryprobgraph}に示すように，ベースTTL720における疎状態マップでは，データ到達率はノード数が増えるに連れて，Epidemic Routingとの差が広がった．これは，メッセージ有効時間であるTTLが長くなったことに加え，宛先に届けることのできるメッセージが多くなったからであると考えられる．また，ベースTTLよりも低く設定された優先TTLにより一部メッセージが削除されることで，網内のメッセージ数が削減されたことが起因していると考えられる．結果的に網内のメッセージ数が本来の数より減少し，優先度の高いメッセージが早く削除されることによって，効率よくメッセージが網内を循環していると考える．
+%%しかし，理論上は優先度の向上するメッセージが，優先TTLによる干渉を受ける前に到達しているか，また，優先度が向上した後，優先TTLの時間内で宛先ノードに到達している必要がある．
+特に，ベースTTLが720の場合，シミュレーション時間と同等の有効時間になるため，メッセージの削除条件がベースTTLによるタイムアウトではなく，バッファ溢れ及び優先TTLのみになってしまう．これらから，ベースTTLが720の場合には，優先TTLの値が小さければ小さいほど優先度の低いメッセージが網内に取り残され，バッファに空きがある限りは到達する可能性の低いメッセージが網内を循環することになる．
 
 \subsection{メッセージ平均遅延時間}
 図\ref{somituttl720latencyavggraph}に示すように，メッセージ平均遅延時間では，Epidemic Routingとの結果は約1200秒から1500秒前後短くなった．全体的にはノード数が多くなるに連れて減少した．Epidemic Routingよりも良い結果が見られたことにより，優先度の向上したメッセージが削除される前に，宛先に無事辿り着いたことを意味している．提案手法では，主に優先TTLの有無がEpidemic Routingとの差に繋がるため，優先TTLの有効性が確認できた．ノード数が多くなるに連れてメッセージ平均遅延時間が減少した原因は，データ到達率が向上したことにより1つあたりのメッセージが早く宛先に到達したからだと考える．
@@ -466,11 +472,11 @@ PriorityMessageRouting&8722&39950&92100\\
 \subsection{メッセージ削除数}
 図\ref{somituttl720droppedgraph}に示すように，メッセージ削除数では，ノード数が多くなるに連れて削除数が多くなった．これは，ノードが増える度に複製メッセージが量産され，1ノードあたりのバッファ溢れ及び優先TTLによるメッセージの削除が多くなったからだと考える．
 
-\subsection{疎密状態マップ，ベースTTL720における優先TTL}
+\subsection{疎状態マップ，ベースTTL720における優先TTL}
 図\ref{priorityTTL_somitsu720}に示すように，TTL300における優先TTLと同様の結果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(疎密状態マップ ベースTTL720)}}
+			 \caption[]{\it{優先TTL(疎状態マップ ベースTTL720)}}
 			 \label{priorityTTL_somitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
@@ -487,20 +493,20 @@ PriorityMessageRouting&8722&39950&92100\\
  \end{table}
 
 %%=============スターマップ_TTL300=============
-\section{過密状態マップ ベースTTL=300}
+\section{密状態マップ ベースTTL=300}
 ベースTTL300における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{kamituttl300deliveryprob}，表\ref{kamituttl300latencyavg}，表\ref{kamituttl300dropped}にそれぞれ示す．
 
 %%==============================================
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_toutaturitu.png}
-\caption[]{\it{データ到達率(過密状態マップ ベースTTL300)}}
+\caption[]{\it{データ到達率(密状態マップ ベースTTL300)}}
 \label{kamituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(過密状態マップ ベースTTL300)}}
+      \caption[]{\it{データ到達率(密状態マップ ベースTTL300)}}
       \label{kamituttl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -522,13 +528,13 @@ PriorityMessageRouting&0.8732&0.9176&0.907\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(過密状態マップ ベースTTL300)}}
+\caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL300)}}
 \label{kamituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(過密状態マップ ベースTTL300)}}
+      \caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL300)}}
       \label{kamituttl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -548,13 +554,13 @@ PriorityMessageRouting&2465.137&2156.8358&2158.276\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(過密状態マップ ベースTTL300)}}
+\caption[]{\it{メッセージ削除数(密状態マップ ベースTTL300)}}
 \label{kamituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(過密状態マップ ベースTTL300)}}
+      \caption[]{\it{メッセージ削除数(密状態マップ ベースTTL300)}}
       \label{kamituttl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -571,19 +577,19 @@ PriorityMessageRouting&87071&252813&482528\\
 \end{table}
 
 \subsection{データ到達率}
-図\ref{kamituttl300deliveryprobgraph}に示すように，ベースTTL300における過密状態マップでは，データ到達率はEpidemic Routingが約6から7割に対し，PM Routingでは約9割と高水準なデータが得られた．これは，疎密状態マップと同様に，優先度が向上した後，優先TTLの時間内で宛先ノードに到達したからであると考える．また，スターマップではデフォルトマップよりもノード数による変化は大きくなかった．しかし，過密状態であるスターマップにおいても約20\%高いことが確認できたため，マップによる変化を問わず，PM Routingの有効性が立証できた．
+図\ref{kamituttl300deliveryprobgraph}に示すように，ベースTTL300における密状態マップでは，データ到達率はEpidemic Routingが約6から7割に対し，PM Routingでは約9割と高水準なデータが得られた．これは，疎状態マップと同様に，優先度が向上した後，優先TTLの時間内で宛先ノードに到達したからであると考える．また，スターマップではデフォルトマップよりもノード数による変化は大きくなかった．しかし，密状態であるスターマップにおいても約20\%高いことが確認できたため，マップによる変化を問わず，PM Routingの有効性が立証できた．
 
 \subsection{メッセージ平均遅延時間}
-図\ref{kamituttl300latencyavggraph}に示すように，メッセージ平均遅延時間では，ノード数が300の時点で約1.4秒増加した．当初は，疎密状態であるデフォルトマップと同様に，ノード数の変化によって減少すると考えていた．しかし，結果がそうでなかった理由として考えられるのは，スターマップにおける人間及び車と例えたノードの初期配置によるものだと考える．
+図\ref{kamituttl300latencyavggraph}に示すように，メッセージ平均遅延時間では，ノード数が300の時点で約1.4秒増加した．当初は，疎状態であるデフォルトマップと同様に，ノード数の変化によって減少すると考えていた．しかし，結果がそうでなかった理由として考えられるのは，スターマップにおける人間及び車と例えたノードの初期配置によるものだと考える．
 
 \subsection{メッセージ削除数}
 図\ref{kamituttl300droppedgraph}に示すように，メッセージ削除数では，デフォルトマップよりも約5から8倍遅延していた．この結果においても，原因は過密によるノードの接触により複製メッセージが量産され，バッファ溢れ及び優先TTLによるメッセージの削除が多くなったからだと考える．
 
-\subsection{過密状態マップ，ベースTTL300における優先TTL}
-図\ref{priorityTTL_kamitsu300}に示すように，先程までの疎密状態マップと比較すると，優先TTLはより低い値で効果が得られた．過密状態マップは接触と複製メッセージの増加により，バッファ内のメッセージがあふれやすい環境などで効果が得られやすいのではないかと考える．
+\subsection{密状態マップ，ベースTTL300における優先TTL}
+図\ref{priorityTTL_kamitsu300}に示すように，先程までの疎状態マップと比較すると，優先TTLはより低い値で効果が得られた．密状態マップは接触と複製メッセージの増加により，バッファ内のメッセージがあふれやすい環境などで効果が得られやすいのではないかと考える．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(過密状態マップ ベースTTL300)}}
+			 \caption[]{\it{優先TTL(密状態マップ ベースTTL300)}}
 			 \label{priorityTTL_kamitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
@@ -600,21 +606,22 @@ PriorityMessageRouting&87071&252813&482528\\
  \end{table}
 \newpage
 
+
 %%=============スターマップ_TTL720=============
-\section{過密状態マップ ベースTTL=720}
+\section{密状態マップ ベースTTL=720}
 ベースTTL720における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を，表\ref{kamituttl720deliveryprob}，表\ref{kamituttl720latencyavg}，表\ref{kamituttl720dropped}にそれぞれ示す．
 
 %%==============================================
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_toutaturitu.png}
-\caption[]{\it{データ到達率(過密状態マップ ベースTTL720)}}
+\caption[]{\it{データ到達率(密状態マップ ベースTTL720)}}
 \label{kamituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(過密状態マップ ベースTTL720)}}
+      \caption[]{\it{データ到達率(密状態マップ ベースTTL720)}}
       \label{kamituttl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -636,13 +643,13 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(過密状態マップ ベースTTL720)}}
+\caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL720)}}
 \label{kamituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
 	\begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(過密状態マップ ベースTTL720)}}
+      \caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL720)}}
       \label{kamituttl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 				\hline
@@ -662,13 +669,13 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(過密状態マップ ベースTTL720)}}
+\caption[]{\it{メッセージ削除数(密状態マップ ベースTTL720)}}
 \label{kamituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(過密状態マップ ベースTTL720)}}
+      \caption[]{\it{メッセージ削除数(密状態マップ ベースTTL720)}}
       \label{kamituttl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -692,11 +699,11 @@ PriorityMessageRouting&87071&254976&485834\\
 \subsection{メッセージ削除数}
 図\ref{kamituttl720droppedgraph}に示すように，PMRoutingとEpidemicRoutingのメッセージ削除数を比較すると，PMRoutingのメッセージ削除数の方が，僅かに小さくなった．マップが過密であるが故に，ノードのリストの更新が高い頻度で行われたことにより，メッセージの優先度更新も同様の頻度で行われ，その結果，保持状態になっているメッセージが多く出てきたことで，EpidemicRoutingよりも削除数が少なくなったのではないかと考える．また，ベースTTL300と比較した場合において，結果には大きな違いはなかったため，この過密マップにおいては他の条件でも同様の結果が得られるのではないかと考える．
 
-\subsection{過密状態マップ，ベースTTL720における優先TTL}
-図\ref{priorityTTL_kamitsu720}に示すように，TTL300と同様に，疎密状態マップよりも低い優先度で効果が得られた．
+\subsection{密状態マップ，ベースTTL720における優先TTL}
+図\ref{priorityTTL_kamitsu720}に示すように，TTL300と同様に，疎状態マップよりも低い優先度で効果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(過密状態マップ TTL720)}}
+			 \caption[]{\it{優先TTL(密状態マップ TTL720)}}
 			 \label{priorityTTL_kamitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
@@ -711,23 +718,34 @@ PriorityMessageRouting&87071&254976&485834\\
 			 \end{tabular}
 		 \end{center}
  \end{table}
+ \section{シミュレーション総括}
+ 今回の研究におけるシミュレーションでは，データ到達率や平均遅延時間において，疎状態のマップと密状態のマップ両方において，
+ EpidemicRoutingをおおむね上回る結果となったが，メッセージ削除数においては，PMroutingがもっとも上回る結果となった．
+ また，あらゆる指標において，MaxPropの結果には届かない結果となった．
+ 提案手法では，メッセージの保有に着目し，バッファ内の効率的なメッセージ削除についての動作を行っていないため，MaxPropのように，何らかの処理によるメッセージ削除の
+ 動作を組み込む必要があると考える．
+ また，私達の最初の想定では，優先TTLを初期TTLよりも大きく設定することで，データ到達率の向上を見込んでいたが，実際には優先TTLを
+ 初期のTTLよりも小さくすることで，データ到達率が向上した．これにより，かえってメッセージ削除数が増加したのだと考える．
+ 優先TTLが初期のTTLよりも小さく設定した場合において，効果が得られた原因として，初期TTL自体既に大きすぎてしまっていて，それを優先TTLにより小さくしたことで，
+適切なTTLとなり，データ到達率が向上した可能性も考えられる． 
 \newpage
 \chapter{結論}
 本研究では，EpidemicRoutingのTTLによるタイムアウト等により，本来届くはずのメッセージまでも削除されてしまっているという問題点に着目した．提案手法であるPriority Message Routingでは，遭遇したノードのリストをもとに優先度を設定し，優先度の高いメッセージを保持し続ける方式を提案した．
 
-また，提案手法をThe ONEシミュレータにより，疎密状態及び過密状態のマップを使用した，ベースTTL及び優先TTL，ノード数別のシミュレーションを行った．それらの結果を従来手法である
+また，提案手法をThe ONEシミュレータにより，疎状態及び密状態のマップを使用した，ベースTTL及び優先TTL，ノード数別のシミュレーションを行った．それらの結果を従来手法である
 Epidemic Routingと比較評価を行った結果，以下のような結論が得られた．
 
 \begin{quote}
  \begin{itemize}
-  \item ノード数が増加するに連れて，複製メッセージも増加するため，網内のメッセージを効率的に削除しなければならない．
-  \item 各マップにおいて，データ到達率及びメッセージ遅延時間の結果に反し，メッセージ削除数が増加するといったトレードオフの関係性を確認できた．
-  \item バッファ内のメッセージがあふれやすい環境などで，優先TTLが短いほどデータ到達率が向上した．
-  \item データ到達率について，従来のEpidemic Routingよりも大きい結果となり，MaxPropの到達率には届かない結果となった．
- \end{itemize}
+	\item データ到達率，平均遅延時間について，従来のEpidemic Routingよりも優れた結果となった．
+	\item MaxPropに対しては，あらゆる指標において上回ることができなかった．
+	\item メッセージ削除数がいずれのルーティング手法と比較しても，多くなってしまう結果となった．
+  \item 優先TTLをベースTTLよりも小さく設定することで，データ到達率が向上したため，シミュレーション条件の見直しが必要である．
+   \end{itemize}
 \end{quote}
 
-疎密状態であるデフォルトマップのベースTTLが300かつノード数が100個のメッセージ平均遅延時間を除く全ての項目において，当初の研究目標である「データ到達率」，「メッセージ平均遅延時間」「メッセージ削除数」を達成した．
+%%疎状態であるデフォルトマップのベースTTLが300かつノード数が100個のメッセージ平均遅延時間を除く全ての項目において，当初の研究目標である「データ到達率」，「メッセージ平均遅延時間」「メッセージ削除数」を達成した．
+以上より，EpidemicRoutingの結果と比較した場合において，データ到達率，および平均遅延時間において優れた手法となった．また，メッセージ削除数において，優れた結果を得るために，バッファ内の効率的なメッセージ削除についての動作を行うべきである．
 
 本実験における提案手法を現実の災害時で扱うためには，各地域のマップ形状や端末保有台数等を考慮しなければならない．以上から，災害地域の現状を想定することで，この提案手法は最大限に効果を発揮すると考えられる．
 
