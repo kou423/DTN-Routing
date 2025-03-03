@@ -1,3 +1,4 @@
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% 情報通信システム工学科 卒業論文テンプレート
@@ -295,19 +296,18 @@ $hop < th$のメッセージは，$hop$の小さい順に高い優先度を与�
 
 %%=============デフォルトマップ_TTL300=============
 \section{疎状態マップ TTL=300}
-ベースTTL300における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を以下に示す．ここで，MaxPropの削除数については，ベースTTLによるタイムアウトやバッファ溢れ等によるメッセージの削除(dropped)だけでなく，MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録している．
-
+ベースTTL300における，ノード数を100，200，300に設定したときの，「データ到達率」，「メッセージ平均遅延時間」，「メッセージ削除数」の結果を以下に示す．ここで，MaxPropの削除数については，ベースTTLによるタイムアウトやバッファ溢れ等によるメッセージの削除(dropped)だけでなく，MaxPropのアルゴリズムによるメッセージの削除(removed)についての両方を記録し，表には「re」として記録している．
 %%==============================================
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_toutaturitu.png}
-\caption[]{\it{データ到達率(疎状態マップ TTL300)}}
+\caption[]{データ到達率(疎状態マップ \textit{TTL300})}
 \label{somituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(疎状態マップ TTL300)}}
+      \caption[]{データ到達率(疎状態マップ \textit{TTL300})}
       \label{somituTtl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -329,13 +329,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6282\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(疎状態マップ TTL300)}}
+\caption[]{メッセージ平均遅延時間(疎状態マップ \textit{TTL300})}
 \label{somituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(疎状態マップ TTL300)}}
+      \caption[]{メッセージ平均遅延時間(疎状態マップ \textit{TTL300})}
       \label{somituTtl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -355,13 +355,13 @@ PriorityMessageRouting&11181.6049&5722.8538&7707.9552\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL300/default_TTL300_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(疎状態マップ TTL300)}}
+\caption[]{メッセージ削除数(疎状態マップ \textit{TTL300})}
 \label{somituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(疎状態マップ TTL300)}}
+      \caption[]{メッセージ削除数(疎状態マップ \textit{TTL300})}
       \label{somituTtl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -391,11 +391,11 @@ PriorityMessageRouting&8722&40988&93206\\
 表\ref{priorityTTL_somitsu300}に示すように，ノード数が100の場合を除き，優先TTLはベースTTLよりも低い値に設定することでより効果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(疎状態マップ ベースTTL300)}}
+			 \caption[]{優先TTL(疎状態マップ ベース\textit{TTL300})}
 			 \label{priorityTTL_somitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL[\it{min}]\\
+ ノード数&優先TTL[\textit{min}]\\
  \hline
  100&410\\
  \hline
@@ -416,13 +416,13 @@ PriorityMessageRouting&8722&40988&93206\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_toutaturitu.png}
-\caption[]{\it{データ到達率(疎状態マップ ベースTTL720)}}
+\caption[]{データ到達率(疎状態マップ ベース\textit{TTL720})}
 \label{somituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(疎状態マップ ベースTTL720)}}
+      \caption[]{データ到達率(疎状態マップ ベース\textit{TTL720})}
       \label{somituTtl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -444,13 +444,13 @@ PriorityMessageRouting&0.3948&0.5347&0.6377\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(疎状態マップ ベースTTL720)}}
+\caption[]{メッセージ平均遅延時間(疎状態マップ ベース\textit{TTL720})}
 \label{somituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(疎状態マップ ベースTTL720)}}
+      \caption[]{メッセージ平均遅延時間(疎状態マップ ベース\textit{TTL720})}
       \label{somituTtl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -470,13 +470,13 @@ PriorityMessageRouting&11181.6049&9160.6067&8219.5436\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/default_TTL720/default_TTL720_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(疎状態マップ ベースTTL720)}}
+\caption[]{メッセージ削除数(疎状態マップ ベース\textit{TTL720})}
 \label{somituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(疎状態マップ ベースTTL720)}}
+      \caption[]{メッセージ削除数(疎状態マップ ベース\textit{TTL720})}
       \label{somituTtl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -507,11 +507,11 @@ PriorityMessageRouting&8722&39950&92100\\
 図\ref{priorityTTL_somitsu720}に示すように，TTL300における優先TTLと同様の結果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(疎状態マップ ベースTTL720)}}
+			 \caption[]{優先TTL(疎状態マップ ベース\textit{TTL720})}
 			 \label{priorityTTL_somitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL[\it{min}]\\
+ ノード数&優先TTL[\textit{min}]\\
  \hline
  100&410\\
  \hline
@@ -531,13 +531,13 @@ PriorityMessageRouting&8722&39950&92100\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_toutaturitu.png}
-\caption[]{\it{データ到達率(密状態マップ ベースTTL300)}}
+\caption[]{データ到達率(密状態マップ ベース\textit{TTL300})}
 \label{kamituttl300deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(密状態マップ ベースTTL300)}}
+      \caption[]{データ到達率(密状態マップ ベース\textit{TTL300})}
       \label{kamituttl300deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -559,13 +559,13 @@ PriorityMessageRouting&0.8732&0.9176&0.907\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL300)}}
+\caption[]{メッセージ平均遅延時間(密状態マップ ベース\textit{TTL300})}
 \label{kamituttl300latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL300)}}
+      \caption[]{メッセージ平均遅延時間(密状態マップ ベース\textit{TTL300})}
       \label{kamituttl300latencyavg}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -585,13 +585,13 @@ PriorityMessageRouting&2465.137&2156.8358&2158.276\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL300/star_TTL300_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(密状態マップ ベースTTL300)}}
+\caption[]{メッセージ削除数(密状態マップ ベース\textit{TTL300})}
 \label{kamituttl300droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(密状態マップ ベースTTL300)}}
+      \caption[]{メッセージ削除数(密状態マップ ベース\textit{TTL300})}
       \label{kamituttl300dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -620,11 +620,11 @@ PriorityMessageRouting&87071&252813&482528\\
 図\ref{priorityTTL_kamitsu300}に示すように，先程までの疎状態マップと比較すると，優先TTLはより低い値で効果が得られた．今回のシミュレーション条件では，密状態マップでの接触と複製メッセージの増加により，バッファ内のメッセージがあふれやすい環境になっており，こういった環境ではベースTTLよりも大幅に小さい優先TTLを設定することで，効果が得られやすいのではないかと考える．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(密状態マップ ベースTTL300)}}
+			 \caption[]{優先TTL(密状態マップ ベース\textit{TTL300})}
 			 \label{priorityTTL_kamitsu300}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL[\it{min}]\\
+ ノード数&優先TTL[\textit{min}]\\
  \hline
  100&90\\
  \hline
@@ -646,13 +646,13 @@ PriorityMessageRouting&87071&252813&482528\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_toutaturitu.png}
-\caption[]{\it{データ到達率(密状態マップ ベースTTL720)}}
+\caption[]{データ到達率(密状態マップ ベース\textit{TTL720)}}
 \label{kamituttl720deliveryprobgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{データ到達率(密状態マップ ベースTTL720)}}
+      \caption[]{データ到達率(密状態マップ ベース\textit{TTL720})}
       \label{kamituttl720deliveryprob}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -674,13 +674,13 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_tienjikan.png}
-\caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL720)}}
+\caption[]{メッセージ平均遅延時間(密状態マップ ベース\textit{TTL720})}
 \label{kamituttl720latencyavggraph}
 \end{figure}
 
 \begin{table}[H]
 	\begin{center}
-      \caption[]{\it{メッセージ平均遅延時間(密状態マップ ベースTTL720)}}
+      \caption[]{メッセージ平均遅延時間(密状態マップ ベース\textit{TTL720})}
       \label{kamituttl720latencyavg}
       \begin{tabular}{|c|c|c|c|}
 				\hline
@@ -700,13 +700,13 @@ PriorityMessageRouting&0.8732&0.9073&0.8859\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{figures/star_TTL720/star_TTL720_sakuzyosu.png}
-\caption[]{\it{メッセージ削除数(密状態マップ ベースTTL720)}}
+\caption[]{メッセージ削除数(密状態マップ ベース\textit{TTL720})}
 \label{kamituttl720droppedgraph}
 \end{figure}
 
 \begin{table}[H]
  \begin{center}
-      \caption[]{\it{メッセージ削除数(密状態マップ ベースTTL720)}}
+      \caption[]{メッセージ削除数(密状態マップ ベース\textit{TTL720})}
       \label{kamituttl720dropped}
       \begin{tabular}{|c|c|c|c|}
 \hline
@@ -736,11 +736,11 @@ PriorityMessageRouting&87071&254976&485834\\
 図\ref{priorityTTL_kamitsu720}に示すように，TTL300と同様に，疎状態マップよりも低い優先度で効果が得られた．
 \begin{table}[H]
 	\begin{center}
-			 \caption[]{\it{優先TTL(密状態マップ TTL720)}}
+			 \caption[]{優先TTL(密状態マップ \textit{TTL720})}
 			 \label{priorityTTL_kamitsu720}
 			 \begin{tabular}{|c|c|}
  \hline
- ノード数&優先TTL[\it{min}]\\
+ ノード数&優先TTL[\textit{min}]\\
  \hline
  100&90\\
  \hline
@@ -759,10 +759,10 @@ PriorityMessageRouting&87071&254976&485834\\
  動作を組み込む必要があると考える．
  
  
- 私達の最初の想定では，優先TTLを初期TTLよりも大きく設定することで，データ到達率の向上を見込んでいたが，実際には優先TTLを
- ベースTTLよりも小さくすることで，データ到達率が向上した．これにより，かえってメッセージ削除数が増加したのだと考える．
+ 最初の想定では，優先TTLを初期TTLよりも大きく設定することで，データ到達率の向上を見込んでいたが，実際には優先TTLを
+ ベースTTLよりも小さくすることで，データ到達率が向上した．これにより，かえってメッセージ削除数が増加したのだと考えrareru．
  優先TTLがベースTTLよりも小さく設定した場合において，効果が得られた原因として，初期TTL自体既に大きすぎてしまっていて，それを優先TTLにより小さくしたことで，
-適切なTTLとなり，データ到達率が向上した可能性も考えられる． 
+適切なTTLとなり，データ到達率が向上した可能性がある． 
 \newpage
 \chapter{結論}
 本研究では，EpidemicRoutingのTTLによるタイムアウト等により，本来届くはずのメッセージまでも削除されてしまっているという問題点に着目した．提案手法であるPriority Message Routingでは，遭遇したノードのリストをもとに優先度を設定し，優先度の高いメッセージを保持し続ける方式を提案した．
@@ -782,7 +782,8 @@ Epidemic Routingと比較評価を行った結果，以下のような結論が�
 %%疎状態であるデフォルトマップのベースTTLが300かつノード数が100個のメッセージ平均遅延時間を除く全ての項目において，当初の研究目標である「データ到達率」，「メッセージ平均遅延時間」「メッセージ削除数」を達成した．
 以上より，EpidemicRoutingの結果と比較した場合において，データ到達率，および平均遅延時間において優れた手法となった．また，メッセージ削除数において，優れた結果を得るために，バッファ内の効率的なメッセージ削除についての動作を行うべきである．
 
-本実験における提案手法を現実の災害時で扱うためには，各地域のマップ形状や端末保有台数等を考慮しなければならない．以上から，災害地域の現状を想定することで，この提案手法は最大限に効果を発揮すると考えられる．
+また、本研究における提案手法を現実の災害時に役立てるためには，各地域のマップ形状や端末保有台数等を考慮しなければならない．よって，災害地域の状況を正確に把握することが，この提案手法が最大限に効果を発揮するために必要不可欠であり、
+状況把握のための方策や指標についても検討する必要がある。
 
 %%======================================================================================================================
 %% ここまで本文 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
